@@ -74,18 +74,30 @@ def processRequest(req):
     #Output data from Vokaturi & save to Google sheet
     output = "The results of the analysis of " + file_name + " is... "
     
+    row = 2
+    
     if quality.valid:
         output += 'Neutral: %.5f, ' % emotionProbabilities.neutrality
         output += 'Happiness: %.5f, ' % emotionProbabilities.happiness
         output += 'Sadness: %.5f, ' % emotionProbabilities.sadness
         output += 'Anger: %.5f, ' % emotionProbabilities.anger
         output += 'Fear: %.5f' % emotionProbabilities.fear
-        wks.update_cell(row, 1, file_name)
-        wks.update_cell(row, 2, '%0.5f' % emotionProbabilities.neutrality)
-        wks.update_cell(row, 3, '%0.5f' % emotionProbabilities.happiness)
-        wks.update_cell(row, 4, '%0.5f' % emotionProbabilities.sadness)
-        wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.anger)
-        wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.fear)
+        if wks.cell(row, 1).value == "":
+            wks.update_cell(row, 1, file_name)
+            wks.update_cell(row, 2, '%0.5f' % emotionProbabilities.neutrality)
+            wks.update_cell(row, 3, '%0.5f' % emotionProbabilities.happiness)
+            wks.update_cell(row, 4, '%0.5f' % emotionProbabilities.sadness)
+            wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.anger)
+            wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.fear)
+        else:
+            while wks.cell(row, 1).value != "":
+                row += 1
+            wks.update_cell(row, 1, file_name)
+            wks.update_cell(row, 2, '%0.5f' % emotionProbabilities.neutrality)
+            wks.update_cell(row, 3, '%0.5f' % emotionProbabilities.happiness)
+            wks.update_cell(row, 4, '%0.5f' % emotionProbabilities.sadness)
+            wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.anger)
+            wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.fear)     
     else:
         output += "Not enough sonorancy to determine emotions"
     
