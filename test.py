@@ -76,6 +76,8 @@ def processRequest(req):
     
     row = 2
     
+    emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
+    
     if quality.valid:
             
             output += 'Neutral: %.5f, ' % emotionProbabilities.neutrality
