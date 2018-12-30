@@ -86,22 +86,22 @@ def processRequest(req):
         output += 'Fear: %.5f' % emotionProbabilities.fear
         if wks.cell(row, 1).value == "":
             wks.update_cell(row, 1, file_name)
-            wks.update_cell(row, 2, datetime.datetime.now())
             wks.update_cell(row, 3, '%0.5f' % emotionProbabilities.neutrality)
             wks.update_cell(row, 4, '%0.5f' % emotionProbabilities.happiness)
             wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.sadness)
             wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.anger)
             wks.update_cell(row, 7, '%0.5f' % emotionProbabilities.fear)
+            wks.update_cell(row, 2, datetime.datetime.now())
         else:
             while wks.cell(row, 1).value != "":
                 row += 1
             wks.update_cell(row, 1, file_name)
-            wks.update_cell(row, 2, datetime.datetime.now())
             wks.update_cell(row, 3, '%0.5f' % emotionProbabilities.neutrality)
             wks.update_cell(row, 4, '%0.5f' % emotionProbabilities.happiness)
             wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.sadness)
             wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.anger)
-            wks.update_cell(row, 7, '%0.5f' % emotionProbabilities.fear)     
+            wks.update_cell(row, 7, '%0.5f' % emotionProbabilities.fear) 
+            wks.update_cell(row, 2, datetime.datetime.now())
     else:
         output += "Not enough sonorancy to determine emotions"
     
