@@ -77,27 +77,45 @@ def processRequest(req):
     row = 2
     
     if quality.valid:
-        output += 'Neutral: %.5f, ' % emotionProbabilities.neutrality
-        output += 'Happiness: %.5f, ' % emotionProbabilities.happiness
-        output += 'Sadness: %.5f, ' % emotionProbabilities.sadness
-        output += 'Anger: %.5f, ' % emotionProbabilities.anger
-        output += 'Fear: %.5f' % emotionProbabilities.fear
-        if wks.cell(row, 1).value == "":
-            wks.update_cell(row, 1, file_name)
-            wks.update_cell(row, 2, '%0.5f' % emotionProbabilities.neutrality)
-            wks.update_cell(row, 3, '%0.5f' % emotionProbabilities.happiness)
-            wks.update_cell(row, 4, '%0.5f' % emotionProbabilities.sadness)
-            wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.anger)
-            wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.fear)
-        else:
-            while wks.cell(row, 1).value != "":
-                row += 1
-            wks.update_cell(row, 1, file_name)
-            wks.update_cell(row, 2, '%0.5f' % emotionProbabilities.neutrality)
-            wks.update_cell(row, 3, '%0.5f' % emotionProbabilities.happiness)
-            wks.update_cell(row, 4, '%0.5f' % emotionProbabilities.sadness)
-            wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.anger)
-            wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.fear)     
+            
+            output += 'Neutral: %.5f, ' % emotionProbabilities.neutrality
+            output += 'Happiness: %.5f, ' % emotionProbabilities.happiness
+            output += 'Sadness: %.5f, ' % emotionProbabilities.sadness
+            output += 'Anger: %.5f, ' % emotionProbabilities.anger
+            output += 'Fear: %.5f' % emotionProbabilities.fear                 
+            
+            emotionValue = [emotionProbabilities.neutrality, 
+                            emotionProbabilities.happiness,
+                            emotionProbabilities.sadness,
+                            emotionProbabilities.anger,
+                            emotionProbabilities.fear]
+            
+            if wks.cell(row, 1).value == "":
+                wks.update_cell(row,1,file_name)
+                wks.update_cell(row,2,'%0.5f' % emotionValue[0]) 
+                wks.update_cell(row,3,'%0.5f' % emotionValue[1]) 
+                wks.update_cell(row,4,'%0.5f' % emotionValue[2]) 
+                wks.update_cell(row,5,'%0.5f' % emotionValue[3])
+                wks.update_cell(row,6,'%0.5f' % emotionValue[4])
+            else:
+                while wks.cell(row, 1).value != "":
+                    row += 1
+                wks.update_cell(row,1,file_name)
+                wks.update_cell(row,2,'%0.5f' % emotionValue[0]) 
+                wks.update_cell(row,3,'%0.5f' % emotionValue[1]) 
+                wks.update_cell(row,4,'%0.5f' % emotionValue[2]) 
+                wks.update_cell(row,5,'%0.5f' % emotionValue[3])
+                wks.update_cell(row,6,'%0.5f' % emotionValue[4])                
+              
+            i = 0
+            maxValue = 0
+            maxIndex = 0;
+            while i < len(emotionValue):
+                if emotionValue[i] > maxValue:
+                    maxIndex = i
+                    maxValue = emotionValue[i]
+                i += 1
+            wks.update_cell(row,7,emotionName[maxIndex]) 
     else:
         output += "Not enough sonorancy to determine emotions"
     
