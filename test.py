@@ -118,7 +118,7 @@ def processRequest(req):
                     maxValue = emotionValue[i]
                 i += 1
             wks.update_cell(row,7,emotionName[maxIndex]) 
-            output += "Main emotion is "
+            output += " Main emotion is "
             output += emotionName[maxIndex]
     else:
         output += "Not enough sonorancy to determine emotions"
