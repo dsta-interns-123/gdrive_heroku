@@ -6,6 +6,8 @@ import io
 from apiclient.http import MediaIoBaseDownload
 import Vokaturi
 
+import datetime 
+
 import gspread 
 from oauth2client.service_account import ServiceAccountCredentials 
 
@@ -84,20 +86,22 @@ def processRequest(req):
         output += 'Fear: %.5f' % emotionProbabilities.fear
         if wks.cell(row, 1).value == "":
             wks.update_cell(row, 1, file_name)
-            wks.update_cell(row, 2, '%0.5f' % emotionProbabilities.neutrality)
-            wks.update_cell(row, 3, '%0.5f' % emotionProbabilities.happiness)
-            wks.update_cell(row, 4, '%0.5f' % emotionProbabilities.sadness)
-            wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.anger)
-            wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.fear)
+            wks.update_cell(row, 2, datetime.datetime.now())
+            wks.update_cell(row, 3, '%0.5f' % emotionProbabilities.neutrality)
+            wks.update_cell(row, 4, '%0.5f' % emotionProbabilities.happiness)
+            wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.sadness)
+            wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.anger)
+            wks.update_cell(row, 7, '%0.5f' % emotionProbabilities.fear)
         else:
             while wks.cell(row, 1).value != "":
                 row += 1
             wks.update_cell(row, 1, file_name)
-            wks.update_cell(row, 2, '%0.5f' % emotionProbabilities.neutrality)
-            wks.update_cell(row, 3, '%0.5f' % emotionProbabilities.happiness)
-            wks.update_cell(row, 4, '%0.5f' % emotionProbabilities.sadness)
-            wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.anger)
-            wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.fear)     
+            wks.update_cell(row, 2, datetime.datetime.now())
+            wks.update_cell(row, 3, '%0.5f' % emotionProbabilities.neutrality)
+            wks.update_cell(row, 4, '%0.5f' % emotionProbabilities.happiness)
+            wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.sadness)
+            wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.anger)
+            wks.update_cell(row, 7, '%0.5f' % emotionProbabilities.fear)     
     else:
         output += "Not enough sonorancy to determine emotions"
     
@@ -124,11 +128,12 @@ def open_gsheet():
     
     #Set headers for google sheet
     wks.update_cell(1, 1, "File Name")
-    wks.update_cell(1, 2, "Neutrality")
-    wks.update_cell(1, 3, "Happiness")
-    wks.update_cell(1, 4, "Sadness")
-    wks.update_cell(1, 5, "Anger")
-    wks.update_cell(1, 6, "Fear")
+    wks.update_cell(1, 2, "Timestamp")
+    wks.update_cell(1, 3, "Neutrality")
+    wks.update_cell(1, 4, "Happiness")
+    wks.update_cell(1, 5, "Sadness")
+    wks.update_cell(1, 6, "Anger")
+    wks.update_cell(1, 7, "Fear")
     return wks
     
     
