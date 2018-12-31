@@ -6,7 +6,7 @@ import io
 from apiclient.http import MediaIoBaseDownload
 import Vokaturi
 
-import datetime 
+import time  
 
 import gspread 
 from oauth2client.service_account import ServiceAccountCredentials 
@@ -91,7 +91,7 @@ def processRequest(req):
             wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.sadness)
             wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.anger)
             wks.update_cell(row, 7, '%0.5f' % emotionProbabilities.fear)
-            wks.update_cell(row, 2, datetime.datetime.now())
+            wks.update_cell(row, 2, time.asctime(time.localtime(time.time()))
         else:
             while wks.cell(row, 1).value != "":
                 row += 1
@@ -101,7 +101,7 @@ def processRequest(req):
             wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.sadness)
             wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.anger)
             wks.update_cell(row, 7, '%0.5f' % emotionProbabilities.fear) 
-            wks.update_cell(row, 2, datetime.datetime.now())
+            wks.update_cell(row, 2, time.asctime(time.localtime(time.time()))
     else:
         output += "Not enough sonorancy to determine emotions"
     
