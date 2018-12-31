@@ -6,7 +6,7 @@ import io
 from apiclient.http import MediaIoBaseDownload
 import Vokaturi
 
-import time  
+import times  
 
 import gspread 
 from oauth2client.service_account import ServiceAccountCredentials 
