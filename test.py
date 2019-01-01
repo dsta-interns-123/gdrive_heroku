@@ -121,7 +121,7 @@ def processRequest(req):
                     maxIndex = i
                     maxValue = emotionValue[i]
                 i += 1
-            wks.update_cell(row,7,emotionName[maxIndex]) 
+            wks.update_cell(row,8,emotionName[maxIndex]) 
             output += " Main emotion is "
             output += emotionName[maxIndex]
             
