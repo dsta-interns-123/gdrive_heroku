@@ -124,8 +124,6 @@ def processRequest(req):
             wks.update_cell(row,8,emotionName[maxIndex]) 
             output += " Dominant emotion is "
             output += emotionName[maxIndex]
-            
-            output += "Are there any other files you would want to analyse? "
 
                
     else:
