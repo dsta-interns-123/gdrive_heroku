@@ -92,7 +92,7 @@ def processRequest(req):
             wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.anger)
             wks.update_cell(row, 7, '%0.5f' % emotionProbabilities.fear)
             try:
-                wks.update_cell(row, 2, datetime.datetime.now())
+                wks.update_cell(row, 2, str(datetime.datetime.now()))
             except SyntaxError:
                 wks.update_cell(row, 2, "SyntaxError")
             except NameError:
@@ -118,7 +118,7 @@ def processRequest(req):
             wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.anger)
             wks.update_cell(row, 7, '%0.5f' % emotionProbabilities.fear) 
             try:
-                wks.update_cell(row, 2, datetime.datetime.now())
+                wks.update_cell(row, 2, str(datetime.datetime.now()))
             except SyntaxError:
                 wks.update_cell(row, 2, "SyntaxError")
             except NameError:
