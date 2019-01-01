@@ -91,7 +91,13 @@ def processRequest(req):
             wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.sadness)
             wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.anger)
             wks.update_cell(row, 7, '%0.5f' % emotionProbabilities.fear)
-            wks.update_cell(row, 2, datetime.datetime.now())
+            try:
+                wks.update_cell(row, 2, datetime.datetime.now())
+            except ImportError:
+                wks.update_cell(row, 2, "datetime module not imported")
+            except:
+                wks.update_cell(row, 2, "other errors")
+                
         else:
             while wks.cell(row, 1).value != "":
                 row += 1
@@ -101,7 +107,12 @@ def processRequest(req):
             wks.update_cell(row, 5, '%0.5f' % emotionProbabilities.sadness)
             wks.update_cell(row, 6, '%0.5f' % emotionProbabilities.anger)
             wks.update_cell(row, 7, '%0.5f' % emotionProbabilities.fear) 
-            wks.update_cell(row, 2, datetime.datetime.now())
+            try:
+                wks.update_cell(row, 2, datetime.datetime.now())
+            except ImportError:
+                wks.update_cell(row, 2, "datetime moduke not imported")
+            except:
+                wks.update_cell(row, 2, "other errors")
     else:
         output += "Not enough sonorancy to determine emotions"
     
