@@ -13,6 +13,8 @@ from flask import Flask
 from flask import request
 from flask import make_response
 
+import datetime 
+
 import os
 import json
 app = Flask(__name__)
@@ -94,20 +96,22 @@ def processRequest(req):
             
             if wks.cell(row, 1).value == "":
                 wks.update_cell(row,1,file_name)
-                wks.update_cell(row,2,'%0.5f' % emotionValue[0]) 
-                wks.update_cell(row,3,'%0.5f' % emotionValue[1]) 
-                wks.update_cell(row,4,'%0.5f' % emotionValue[2]) 
-                wks.update_cell(row,5,'%0.5f' % emotionValue[3])
-                wks.update_cell(row,6,'%0.5f' % emotionValue[4])
+                wks.update_cell(row,2,str(datetime.datetime.now()))
+                wks.update_cell(row,3,'%0.5f' % emotionValue[0])
+                wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
+                wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
+                wks.update_cell(row,6,'%0.5f' % emotionValue[3])
+                wks.update_cell(row,7,'%0.5f' % emotionValue[4])
             else:
                 while wks.cell(row, 1).value != "":
                     row += 1
                 wks.update_cell(row,1,file_name)
-                wks.update_cell(row,2,'%0.5f' % emotionValue[0]) 
-                wks.update_cell(row,3,'%0.5f' % emotionValue[1]) 
-                wks.update_cell(row,4,'%0.5f' % emotionValue[2]) 
-                wks.update_cell(row,5,'%0.5f' % emotionValue[3])
-                wks.update_cell(row,6,'%0.5f' % emotionValue[4])                
+                wks.update_cell(row,2,str(datetime.datetime.now()))
+                wks.update_cell(row,3,'%0.5f' % emotionValue[0]) 
+                wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
+                wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
+                wks.update_cell(row,6,'%0.5f' % emotionValue[3])
+                wks.update_cell(row,7,'%0.5f' % emotionValue[4])                
               
             i = 0
             maxValue = 0
@@ -120,6 +124,9 @@ def processRequest(req):
             wks.update_cell(row,7,emotionName[maxIndex]) 
             output += " Main emotion is "
             output += emotionName[maxIndex]
+            
+            output += " Are there any other files you would want to analyse? "
+            
     else:
         output += "Not enough sonorancy to determine emotions"
     
