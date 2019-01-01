@@ -153,12 +153,13 @@ def open_gsheet():
     
     #Set headers for google sheet
     wks.update_cell(1, 1, "File Name")
-    wks.update_cell(1, 2, "Neutrality")
-    wks.update_cell(1, 3, "Happiness")
-    wks.update_cell(1, 4, "Sadness")
-    wks.update_cell(1, 5, "Anger")
-    wks.update_cell(1, 6, "Fear")
-    wks.update_cell(1, 7, "Dominant Emotion")
+    wks.update_cell(1, 2, "Timestamp")
+    wks.update_cell(1, 3, "Neutrality")
+    wks.update_cell(1, 4, "Happiness")
+    wks.update_cell(1, 5, "Sadness")
+    wks.update_cell(1, 6, "Anger")
+    wks.update_cell(1, 7, "Fear")
+    wks.update_cell(1, 8, "Dominant Emotion")
     return wks
     
     
