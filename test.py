@@ -93,8 +93,18 @@ def processRequest(req):
             wks.update_cell(row, 7, '%0.5f' % emotionProbabilities.fear)
             try:
                 wks.update_cell(row, 2, datetime.datetime.now())
-            except ImportError:
-                wks.update_cell(row, 2, "datetime module not imported")
+            except SyntaxError:
+                wks.update_cell(row, 2, "SyntaxError")
+            except NameError:
+                wks.update_cell(row, 2, "NameError")
+            except AttributeError:
+                wks.update_cell(row, 2, "AttributeError")
+            except RuntimeError:
+                wks.update_cell(row, 2, "RuntimeError")
+            except TypeError:
+                wks.update_cell(row, 2, "TypeError")
+            except ValueError:
+                wks.update_cell(row, 2, "ValueError")
             except:
                 wks.update_cell(row, 2, "other errors")
                 
