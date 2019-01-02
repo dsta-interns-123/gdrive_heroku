@@ -82,11 +82,11 @@ def processRequest(req):
     
     if quality.valid:
             
-            output += 'Neutral: %.5f, ' % emotionProbabilities.neutrality
-            output += 'Happiness: %.5f, ' % emotionProbabilities.happiness
-            output += 'Sadness: %.5f, ' % emotionProbabilities.sadness
-            output += 'Anger: %.5f, ' % emotionProbabilities.anger
-            output += 'Fear: %.5f' % emotionProbabilities.fear                 
+            output += 'Neutral: %.4f, ' % emotionProbabilities.neutrality * 100
+            output += 'Happiness: %.4f, ' % emotionProbabilities.happiness * 100
+            output += 'Sadness: %.4f, ' % emotionProbabilities.sadness * 100
+            output += 'Anger: %.4f, ' % emotionProbabilities.anger * 100
+            output += 'Fear: %.4f' % emotionProbabilities.fear * 100                  
             
             emotionValue = [emotionProbabilities.neutrality, 
                             emotionProbabilities.happiness,
