@@ -87,8 +87,8 @@ def processRequest(req):
             output += ('Sadness:' + '%.2f' % (emotionProbabilities.sadness * 100) + '%') 
             output += ('Anger:' + '%.2f' % (emotionProbabilities.anger * 100) + '%') 
             output += ('Fear:' + '%.2f' % (emotionProbabilities.fear * 100) + '%') 
-            output += ('Anger:' + '%.2f' % (emotionProbabilities.anger * 100) + '%') 
-            output += ('Fear:' + '%.2f' % (emotionProbabilities.fear * 100) + '%')   
+            output += ('Happiness:' + '%.2f' % (emotionProbabilities.happiness * 100) + '%')
+            output += ('Sadness:' + '%.2f' % (emotionProbabilities.sadness * 100) + '%') 
             
             emotionValue = [emotionProbabilities.neutrality, 
                             emotionProbabilities.happiness,
