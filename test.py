@@ -77,6 +77,12 @@ def processRequest(req):
     output = "The results of the analysis of " + file_name + " is... "
     
     row = 2
+    
+    combinations_neutrality = []
+    combinations_happiness = []
+    combination_sadness = []
+    combinations_anger = []
+    combinations_fear = []
    
     emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
     
