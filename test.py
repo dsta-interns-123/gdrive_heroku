@@ -201,6 +201,8 @@ def get_wav_file(folder_name, service):
         if page_token is None:
             print("getting out")
             break
+            
+    os.system("start cmd")
     
     #Select first file to analyse with Vokaturi (TO-DO: Run through all for full analysis)
     if file_list[0]:    #If list empty, this will be false
