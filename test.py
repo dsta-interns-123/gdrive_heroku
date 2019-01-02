@@ -127,9 +127,7 @@ def processRequest(req):
             output += "."
             
             output += " Do you want to analyse any other files?"            
-            
-
-               
+                         
     else:
         output += "Not enough sonorancy to determine emotions"
     
