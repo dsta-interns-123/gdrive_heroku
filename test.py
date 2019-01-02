@@ -154,8 +154,8 @@ def open_gsheet():
     wks = gc.open("Data").sheet1
     
     #Set headers for google sheet
-    wks.update_cell(1, 1, "File Name")
-    wks.update_cell(1, 2, "Timestamp")
+    wks.update_cell(1, 1, "File")
+    wks.update_cell(1, 2, "Time")
     wks.update_cell(1, 3, "Neutrality")
     wks.update_cell(1, 4, "Happiness")
     wks.update_cell(1, 5, "Sadness")
