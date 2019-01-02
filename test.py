@@ -3,11 +3,18 @@ from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
 import io
-from apiclient.http import MediaIoBaseDownload
+from apiclient.http import MediaIoBaseDownload, MediaFileUpload
 import Vokaturi
 
 import gspread 
 from oauth2client.service_account import ServiceAccountCredentials 
+
+import argparse
+import time 
+import threading 
+
+from aiy.board import Board
+from aiy.voice.audio import AudioFormat, play_wav, record_file, Recorder
 
 from flask import Flask
 from flask import request
@@ -19,6 +26,50 @@ import os
 import json
 app = Flask(__name__)
 
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--filename', '-f', default='recording.wav')
+    args = parser.parse_args()
+
+    with Board() as board:
+        print('Press button to start recording.')
+        board.button.wait_for_press()
+
+        done = threading.Event()
+        board.button.when_pressed = done.set
+
+        def wait():
+            start = time.monotonic()
+            while not done.is_set():
+                duration = time.monotonic() - start
+                print('Recording: %.02f seconds [Press button to stop]' % duration)
+                time.sleep(0.5)
+
+        record_file(AudioFormat.CD, filename=args.filename, wait=wait, filetype='wav')
+        title = "filename" + "filetype"
+        
+if __name__ == '__main__':
+    main() 
+    
+SCOPES = 'https://www.googleapis.com/auth/drive.file'
+store = file.Storage('credentials.json')
+creds = store.get()
+if not creds or creds.invalid:
+    flow = client.flow_from_clientsecrets('client_secret.json', SCOPES)
+    creds = tools.run_flow(flow, store)
+drive_service = build('drive', 'v3', http=creds.authorize(Http()))
+
+def uploadFile():
+    file_metadata = {
+    'name': 'File_NameInitial.wav',
+    'mimeType': '*/*'
+    }
+    media = MediaFileUpload('title.wav',
+                            mimetype='*/*',
+                            resumable=True)
+    file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    print ('File ID: ' + file.get('id'))    
+        
 Vokaturi.load("lib/open/linux/OpenVokaturi-3-0-linux64.so")
 SCOPES = 'https://www.googleapis.com/auth/drive'
 
