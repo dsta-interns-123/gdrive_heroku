@@ -86,61 +86,71 @@ def processRequest(req):
    
     emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
     
-    if quality.valid:
+    for file in - 
+    
+        if quality.valid:
                           
-            output += (' Neutral: ' + '%.3f' % (emotionProbabilities.neutrality * 100) + '% ')
-            output += (' Happiness: ' + '%.3f' % (emotionProbabilities.happiness * 100) + '% ')
-            output += (' Sadness: ' + '%.3f' % (emotionProbabilities.sadness * 100) + '% ') 
-            output += (' Anger: ' + '%.3f' % (emotionProbabilities.anger * 100) + '% ') 
-            output += (' Fear: ' + '%.3f' % (emotionProbabilities.fear * 100) + '% ') 
+                output += (' Neutral: ' + '%.3f' % (emotionProbabilities.neutrality * 100) + '% ')
+                output += (' Happiness: ' + '%.3f' % (emotionProbabilities.happiness * 100) + '% ')
+                output += (' Sadness: ' + '%.3f' % (emotionProbabilities.sadness * 100) + '% ') 
+                output += (' Anger: ' + '%.3f' % (emotionProbabilities.anger * 100) + '% ') 
+                output += (' Fear: ' + '%.3f' % (emotionProbabilities.fear * 100) + '% ') 
          
-            emotionValue = [emotionProbabilities.neutrality, 
-                            emotionProbabilities.happiness,
-                            emotionProbabilities.sadness,
-                            emotionProbabilities.anger,
-                            emotionProbabilities.fear]
+                emotionValue = [emotionProbabilities.neutrality, 
+                                emotionProbabilities.happiness,
+                                emotionProbabilities.sadness,
+                                emotionProbabilities.anger,
+                                emotionProbabilities.fear]
             
-            if wks.cell(row, 1).value == "":
-                wks.update_cell(row,1,file_name)
-                wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
-                wks.update_cell(row,3,'%0.5f' % emotionValue[0])
-                wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
-                wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
-                wks.update_cell(row,6,'%0.5f' % emotionValue[3])
-                wks.update_cell(row,7,'%0.5f' % emotionValue[4])
-            else:
-                while wks.cell(row, 1).value != "":
-                    row += 1
-                wks.update_cell(row,1,file_name)
-                wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
-                wks.update_cell(row,3,'%0.5f' % emotionValue[0]) 
-                wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
-                wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
-                wks.update_cell(row,6,'%0.5f' % emotionValue[3])
-                wks.update_cell(row,7,'%0.5f' % emotionValue[4]) 
+                if wks.cell(row, 1).value == "":
+                    wks.update_cell(row,1,file_name)
+                    wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
+                    wks.update_cell(row,3,'%0.5f' % emotionValue[0])
+                    wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
+                    wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
+                    wks.update_cell(row,6,'%0.5f' % emotionValue[3])
+                    wks.update_cell(row,7,'%0.5f' % emotionValue[4])
+                else:
+                    while wks.cell(row, 1).value != "":
+                        row += 1
+                    wks.update_cell(row,1,file_name)
+                    wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
+                    wks.update_cell(row,3,'%0.5f' % emotionValue[0]) 
+                    wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
+                    wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
+                    wks.update_cell(row,6,'%0.5f' % emotionValue[3])
+                    wks.update_cell(row,7,'%0.5f' % emotionValue[4]) 
               
-            i = 0
-            maxValue = 0
-            maxIndex = 0;
-            while i < len(emotionValue):
-                if emotionValue[i] > maxValue:
-                    maxIndex = i
-                    maxValue = emotionValue[i]
-                i += 1
-            wks.update_cell(row,8,emotionName[maxIndex]) 
-            output += " Dominant emotion is "
-            output += emotionName[maxIndex]
-            output += "."
+                i = 0
+                maxValue = 0
+                maxIndex = 0;
+                while i < len(emotionValue):
+                    if emotionValue[i] > maxValue:
+                        maxIndex = i
+                        maxValue = emotionValue[i]
+                    i += 1
+                wks.update_cell(row,8,emotionName[maxIndex]) 
+                output += " Dominant emotion is "
+                output += emotionName[maxIndex]
+                output += "."
             
-            output += " Do you want to analyse any other files?"            
+                combinations_neutrality.append(emotionValue[0])
+                combinations_happiness.append(emotionValue[1])
+                combinatios_sadness.append(emotionValue[2])
+                combinations_anger.append(emotionValue[3])
+                combinations_fear.append(emotionValue[4])
+            
+                output += " Do you want to analyse any other files?"            
                          
-    else:
-        output += "Not enough sonorancy to determine emotions"
+        else:
+            output += "Not enough sonorancy to determine emotions"
     
-    voice.destroy()
+        voice.destroy()
+        
+            
     
-    return {
-        "fulfillmentText": output
+        return {
+            "fulfillmentText": output
     }
 
 def authentication():
