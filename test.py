@@ -82,11 +82,11 @@ def processRequest(req):
     
     if quality.valid:
                           
-            output += ('Neutral:' + '%.4f' % (emotionProbabilities.neutrality * 100))
-            output += 'Happiness:  %.4f, ' % emotionProbabilities.happiness 
-            output += 'Sadness: %.4f, ' % emotionProbabilities.sadness 
-            output += 'Anger: %.4f, ' % emotionProbabilities.anger 
-            output += 'Fear: %.4f' % emotionProbabilities.fear                   
+            output += ('Neutral:' + '%.2f' % (emotionProbabilities.neutrality * 100) + '%')
+            output += ('Happiness:' + '%.2f' % (emotionProbabilities.happiness * 100) + '%')
+            output += ('Sadness:' + '%.2f' % (emotionProbabilities.sadness * 100) + '%') 
+            output += ('Anger:' + '%.2f' % (emotionProbabilities.anger * 100) + '%') 
+            output += ('Fear:' + '%.2f' % (emotionProbabilities.fear * 100) + '%')                   
             
             emotionValue = [emotionProbabilities.neutrality, 
                             emotionProbabilities.happiness,
@@ -154,8 +154,8 @@ def open_gsheet():
     wks = gc.open("Data").sheet1
     
     #Set headers for google sheet
-    wks.update_cell(1, 1, "File Name")
-    wks.update_cell(1, 2, "Timestamp")
+    wks.update_cell(1, 1, "File")
+    wks.update_cell(1, 2, "Time")
     wks.update_cell(1, 3, "Neutrality")
     wks.update_cell(1, 4, "Happiness")
     wks.update_cell(1, 5, "Sadness")
