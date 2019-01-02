@@ -39,7 +39,7 @@ def processRequest(req):
     #Obtain info from the query in Dialogflow
     result = req.get("queryResult")
     parameters = result.get("parameters")
-    folder_name = parameters.get("FolderType")
+    file_name = parameters.get("FolderType")
     
     #verify credentials to use google drive API & get Google API client (or something like that)
     service = authentication()
