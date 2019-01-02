@@ -126,7 +126,7 @@ def processRequest(req):
             output += emotionName[maxIndex]
             output += ". \n\n"
             
-            output += " \n\n Do you want to analyse any other files?"            
+            output += " \n\n Do you want to analyse another file? \n\n\n\n"            
                          
     else:
         output += "Not enough sonorancy to determine emotions"
