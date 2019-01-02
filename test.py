@@ -96,7 +96,7 @@ def processRequest(req):
             
             if wks.cell(row, 1).value == "":
                 wks.update_cell(row,1,file_name)
-                wks.update_cell(row,2,str(datetime.datetime.now()) + "GMT")
+                wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
                 wks.update_cell(row,3,'%0.5f' % emotionValue[0])
                 wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
                 wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
@@ -106,7 +106,7 @@ def processRequest(req):
                 while wks.cell(row, 1).value != "":
                     row += 1
                 wks.update_cell(row,1,file_name)
-                wks.update_cell(row,2,str(datetime.datetime.now()) + "GMT")
+                wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
                 wks.update_cell(row,3,'%0.5f' % emotionValue[0]) 
                 wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
                 wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
