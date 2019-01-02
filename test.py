@@ -39,7 +39,7 @@ def processRequest(req):
     #Obtain info from the query in Dialogflow
     result = req.get("queryResult")
     parameters = result.get("parameters")
-    file_name = parameters.get("FolderType")
+    folder_name = parameters.get("FolderType")
     
     #verify credentials to use google drive API & get Google API client (or something like that)
     service = authentication()
@@ -78,6 +78,8 @@ def processRequest(req):
     
     row = 2
     
+    combination = [] 
+    
     emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
     
     if quality.valid:
@@ -111,7 +113,10 @@ def processRequest(req):
                 wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
                 wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
                 wks.update_cell(row,6,'%0.5f' % emotionValue[3])
-                wks.update_cell(row,7,'%0.5f' % emotionValue[4])                
+                wks.update_cell(row,7,'%0.5f' % emotionValue[4]) 
+            
+            combination.append(                             
+                
               
             i = 0
             maxValue = 0
