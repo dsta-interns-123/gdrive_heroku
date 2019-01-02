@@ -82,14 +82,12 @@ def processRequest(req):
     
     if quality.valid:
                           
-            output += ('Neutral:' + '%.2f' % (emotionProbabilities.neutrality * 100) + '%')
-            output += ('Happiness:' + '%.2f' % (emotionProbabilities.happiness * 100) + '%')
-            output += ('Sadness:' + '%.2f' % (emotionProbabilities.sadness * 100) + '%') 
-            output += ('Anger:' + '%.2f' % (emotionProbabilities.anger * 100) + '%') 
-            output += ('Fear:' + '%.2f' % (emotionProbabilities.fear * 100) + '%') 
-            output += ('Happiness:' + '%.2f' % (emotionProbabilities.happiness * 100) + '%')
-            output += ('Sadness:' + '%.2f' % (emotionProbabilities.sadness * 100) + '%') 
-            
+            output += (' Neutral: ' + '%.2f' % (emotionProbabilities.neutrality * 100) + '% ')
+            output += (' Happiness: ' + '%.2f' % (emotionProbabilities.happiness * 100) + '% ')
+            output += (' Sadness: ' + '%.2f' % (emotionProbabilities.sadness * 100) + '% ') 
+            output += (' Anger: ' + '%.2f' % (emotionProbabilities.anger * 100) + '% ') 
+            output += (' Fear: ' + '%.2f' % (emotionProbabilities.fear * 100) + '% ') 
+         
             emotionValue = [emotionProbabilities.neutrality, 
                             emotionProbabilities.happiness,
                             emotionProbabilities.sadness,
