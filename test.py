@@ -77,9 +77,7 @@ def processRequest(req):
     output = "The results of the analysis of " + file_name + " is... "
     
     row = 2
-    
-    combination = [] 
-    
+   
     emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
     
     if quality.valid:
@@ -114,9 +112,6 @@ def processRequest(req):
                 wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
                 wks.update_cell(row,6,'%0.5f' % emotionValue[3])
                 wks.update_cell(row,7,'%0.5f' % emotionValue[4]) 
-            
-            combination.append(                             
-                
               
             i = 0
             maxValue = 0
