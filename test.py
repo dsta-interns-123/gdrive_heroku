@@ -4,7 +4,7 @@ from httplib2 import Http
 from oauth2client import file, client, tools
 import io
 from apiclient.http import MediaIoBaseDownload
-import Vokaturi
+
 
 import gspread 
 from oauth2client.service_account import ServiceAccountCredentials 
@@ -13,13 +13,10 @@ from flask import Flask
 from flask import request
 from flask import make_response
 
-import datetime 
-
 import os
 import json
 app = Flask(__name__)
 
-Vokaturi.load("lib/open/linux/OpenVokaturi-3-0-linux64.so")
 SCOPES = 'https://www.googleapis.com/auth/drive'
 
 @app.route('/webhook', methods=['POST'])
@@ -62,19 +59,6 @@ def processRequest(req):
     done = False
     while done is False:
         status, done = downloader.next_chunk()
-    
-    #parse buffered stream into Vokaturi (TO-DO: FIX BYTE CONVERSION)
-    buffer_length = fh.getbuffer().nbytes
-    c_buffer = Vokaturi.SampleArrayC(buffer_length)
-    c_buffer[:] = fh.getvalue() 
-    voice = Vokaturi.Voice (8000, buffer_length)
-    voice.fill(buffer_length, c_buffer)
-    quality = Vokaturi.Quality()
-    emotionProbabilities = Vokaturi.EmotionProbabilities()
-    voice.extract(quality, emotionProbabilities)
-    
-    #Output data from Vokaturi & save to Google sheet
-    output = "The results of the analysis of " + file_name + " is... "
     
     row = 2
     
