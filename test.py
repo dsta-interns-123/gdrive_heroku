@@ -5,9 +5,10 @@ from oauth2client import file, client, tools
 import io
 from apiclient.http import MediaIoBaseDownload
 
-
 import gspread 
 from oauth2client.service_account import ServiceAccountCredentials 
+
+from deepaffects.realtime.util import get_deepaffects_client, chunk_generator_from_file, chunk_generator_from_url
 
 from flask import Flask
 from flask import request
@@ -62,62 +63,58 @@ def processRequest(req):
     
     row = 2
     
-    emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
-    
-    if quality.valid:
-            
-            output += 'Neutral: %.5f, ' % emotionProbabilities.neutrality
-            output += 'Happiness: %.5f, ' % emotionProbabilities.happiness
-            output += 'Sadness: %.5f, ' % emotionProbabilities.sadness
-            output += 'Anger: %.5f, ' % emotionProbabilities.anger
-            output += 'Fear: %.5f' % emotionProbabilities.fear                 
-            
-            emotionValue = [emotionProbabilities.neutrality, 
-                            emotionProbabilities.happiness,
-                            emotionProbabilities.sadness,
-                            emotionProbabilities.anger,
-                            emotionProbabilities.fear]
-            
-            if wks.cell(row, 1).value == "":
-                wks.update_cell(row,1,file_name)
-                wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
-                wks.update_cell(row,3,'%0.5f' % emotionValue[0])
-                wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
-                wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
-                wks.update_cell(row,6,'%0.5f' % emotionValue[3])
-                wks.update_cell(row,7,'%0.5f' % emotionValue[4])
-            else:
-                while wks.cell(row, 1).value != "":
-                    row += 1
-                wks.update_cell(row,1,file_name)
-                wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
-                wks.update_cell(row,3,'%0.5f' % emotionValue[0]) 
-                wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
-                wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
-                wks.update_cell(row,6,'%0.5f' % emotionValue[3])
-                wks.update_cell(row,7,'%0.5f' % emotionValue[4])                
-              
-            i = 0
-            maxValue = 0
-            maxIndex = 0;
-            while i < len(emotionValue):
-                if emotionValue[i] > maxValue:
-                    maxIndex = i
-                    maxValue = emotionValue[i]
-                i += 1
-            wks.update_cell(row,8,emotionName[maxIndex]) 
-            output += " Dominant emotion is "
-            output += emotionName[maxIndex]
-            
-            output += " Do you want to analyse any other files?"            
-            
+    TIMEOUT_SECONDS = 10000
+    apikey = "MOUJJCapJP3ZJBPiz3AUAuJEFJ5GxYw9"
+    is_youtube_url = False
+    languageCode = "en-Us"
+    sampleRate = "16000"
+    encoding = "wav"
+                           
+    # DeepAffects realtime Api client
+    client = get_deepaffects_client()
 
-               
+    metadata = [
+        ('apikey', apikey),
+        ('encoding', encoding),
+        ('samplerate', sampleRate),
+        ('languagecode', languageCode)
+    ]        
+
+    responses = client.IdentifyEmotion(chunk_generator_from_file(file_name), TIMEOUT_SECONDS, metadata=metadata)
+    
+    x = 9
+    
+    if wks.cell(row, 1).value == "":
+    
+        for response in responses:
+            period = response.end - response.start 
+            wks.update_cell(row, x, period)
+            wks.update_cell(row, x+1, response.emotion)
+            x += 2
+                    
+            if period > max_period:  
+                max_period = period 
+                main_emotion= response.emotion 
+                
+        wks.update_cell(row, 13, main_emotion)
+        
     else:
-        output += "Not enough sonorancy to determine emotions"
-    
-    voice.destroy()
-    
+        
+        while wks.cell(row, 1).value != "":
+            row += 1
+            
+        for response in responses:
+            period = response.end - response.start 
+            wks.update_cell(row, x, period)
+            wks.update_cell(row, x+1, response.emotion)
+            x += 2
+                    
+            if period > max_period:  
+                max_period = period 
+                main_emotion= response.emotion 
+        
+        wks.update_cell(row, 13, main_emotion)
+        
     return {
         "fulfillmentText": output
     }
