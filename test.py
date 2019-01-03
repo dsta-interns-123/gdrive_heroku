@@ -32,7 +32,6 @@ def main():
     args = parser.parse_args()
 
     with Board() as board:
-        print('Press button to start recording.')
         board.button.wait_for_press()
 
         done = threading.Event()
@@ -41,11 +40,10 @@ def main():
         def wait():
             start = time.monotonic()
             while not done.is_set():
-                duration = time.monotonic() - start
-                print('Recording: %.02f seconds [Press button to stop]' % duration)
+                duration = time.monotonic() 
                 time.sleep(0.5)
 
-        record_file(AudioFormat.CD, filename=args.filename, wait=wait, filetype='wav')
+        record_file(AudioFormat.wav, filename=args.filename, wait=wait, filetype='wav')
         title = "filename" + "filetype"
         
 if __name__ == '__main__':
