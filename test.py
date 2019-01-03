@@ -194,7 +194,6 @@ def get_wav_file(folder_name, service):
                 q="'" + folder_id + "' in parents",
                 spaces='drive', fields="nextPageToken, files(id, name)", pageToken=page_token).execute()
         for item in response.get('files', []):
-            if ".wav" in item.get('name'):
                 file_list[0].insert(len(folder_list[0]),item.get('name'))
                 file_list[1].insert(len(folder_list[1]),item.get('id'))
         page_token = response.get('nextPageToken', None)
