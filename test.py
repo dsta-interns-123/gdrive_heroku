@@ -66,21 +66,21 @@ def processRequest(req):
             status, done = downloader.next_chunk()
     
         #parse buffered stream into Vokaturi (TO-DO: FIX BYTE CONVERSION)
-    buffer_length = fh.getbuffer().nbytes
-    c_buffer = Vokaturi.SampleArrayC(buffer_length)
-    c_buffer[:] = fh.getvalue() 
-    voice = Vokaturi.Voice (8000, buffer_length)
-    voice.fill(buffer_length, c_buffer)
-    quality = Vokaturi.Quality()
-    emotionProbabilities = Vokaturi.EmotionProbabilities()
-    voice.extract(quality, emotionProbabilities)
+        buffer_length = fh.getbuffer().nbytes
+        c_buffer = Vokaturi.SampleArrayC(buffer_length)
+        c_buffer[:] = fh.getvalue() 
+        voice = Vokaturi.Voice (8000, buffer_length)
+        voice.fill(buffer_length, c_buffer)
+        quality = Vokaturi.Quality()
+        emotionProbabilities = Vokaturi.EmotionProbabilities()
+        voice.extract(quality, emotionProbabilities)
     
-    #Output data from Vokaturi & save to Google sheet
-    output = "The results of the analysis of " + file_name + " is... "
+        #Output data from Vokaturi & save to Google sheet
+        output = "The results of the analysis of " + file_name + " is... "
     
-    row = 2
+        row = 2
     
-    emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
+        emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
     
         if quality.valid:
                           
@@ -148,11 +148,9 @@ def processRequest(req):
     
         voice.destroy()
         
-            
-    
         return {
             "fulfillmentText": output
-    }
+        }
 
 def authentication():
     store = file.Storage('token.json')
