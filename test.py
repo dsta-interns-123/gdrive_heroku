@@ -54,16 +54,18 @@ def processRequest(req):
             "fulfillmentText": "No such file in drive"
         }
     
-    request = service.files().get_media(fileId=file_id)
+    for x in identityFileId: 
+        
+        request = service.files().get_media(fileId=x)
     
-    #downloads binary data of wav file and stored in a buffered stream
-    fh = io.BytesIO()
-    downloader = MediaIoBaseDownload(fh, request)
-    done = False
-    while done is False:
-        status, done = downloader.next_chunk()
+        #downloads binary data of wav file and stored in a buffered stream
+        fh = io.BytesIO()
+        downloader = MediaIoBaseDownload(fh, request)
+        done = False
+        while done is False:
+            status, done = downloader.next_chunk()
     
-    #parse buffered stream into Vokaturi (TO-DO: FIX BYTE CONVERSION)
+        #parse buffered stream into Vokaturi (TO-DO: FIX BYTE CONVERSION)
     buffer_length = fh.getbuffer().nbytes
     c_buffer = Vokaturi.SampleArrayC(buffer_length)
     c_buffer[:] = fh.getvalue() 
@@ -218,8 +220,12 @@ def get_wav_file(folder_name, service):
             break
     
     #Select first file to analyse with Vokaturi (TO-DO: Run through all for full analysis)
+    identityFileId = []
+    y = 0
     for x in file_list:    #If list empty, this will be false
-        file_name = file_list[0][0]
-        file_id = file_list[1][0]
-        return [file_name, file_id]
-    else: 
+        file_name = file_list[0][y]
+        file_id = file_list[1][y]
+        identityFileId.append(file_id)
+        y += 1
+    else:
+        return None 
