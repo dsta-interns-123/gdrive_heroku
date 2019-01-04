@@ -78,15 +78,7 @@ def processRequest(req):
     
     row = 2
     
-    combinations_neutrality = []
-    combinations_happiness = []
-    combination_sadness = []
-    combinations_anger = []
-    combinations_fear = []
-   
     emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
-    
-    for file in - 
     
         if quality.valid:
                           
@@ -95,6 +87,12 @@ def processRequest(req):
                 output += (' Sadness: ' + '%.3f' % (emotionProbabilities.sadness * 100) + '% ') 
                 output += (' Anger: ' + '%.3f' % (emotionProbabilities.anger * 100) + '% ') 
                 output += (' Fear: ' + '%.3f' % (emotionProbabilities.fear * 100) + '% ') 
+                
+                listNeutrality  = []
+                listHappiness = []
+                listSadness = []
+                listAnger = []
+                listFear = []
          
                 emotionValue = [emotionProbabilities.neutrality, 
                                 emotionProbabilities.happiness,
@@ -120,6 +118,12 @@ def processRequest(req):
                     wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
                     wks.update_cell(row,6,'%0.5f' % emotionValue[3])
                     wks.update_cell(row,7,'%0.5f' % emotionValue[4]) 
+                    
+                listNeutralty.append(emotionValue[0])
+                listHappiness.append(emotionValue[1])
+                listSadness.append(emotionValue[2])
+                listAnger.append(emotionValue[3])
+                listFear.append(emotionValue[4])
               
                 i = 0
                 maxValue = 0
@@ -134,12 +138,7 @@ def processRequest(req):
                 output += emotionName[maxIndex]
                 output += "."
             
-                combinations_neutrality.append(emotionValue[0])
-                combinations_happiness.append(emotionValue[1])
-                combinatios_sadness.append(emotionValue[2])
-                combinations_anger.append(emotionValue[3])
-                combinations_fear.append(emotionValue[4])
-            
+
                 output += " Do you want to analyse any other files?"            
                          
         else:
