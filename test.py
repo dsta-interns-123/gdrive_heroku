@@ -218,9 +218,8 @@ def get_wav_file(folder_name, service):
             break
     
     #Select first file to analyse with Vokaturi (TO-DO: Run through all for full analysis)
-    if file_list[0]:    #If list empty, this will be false
+    for x in file_list:    #If list empty, this will be false
         file_name = file_list[0][0]
         file_id = file_list[1][0]
         return [file_name, file_id]
-    else:
-        return None
+    else: 
