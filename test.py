@@ -77,6 +77,8 @@ def processRequest(req):
     output = "The results of the analysis of " + file_name + " is... "
     
     row = 2
+    
+    total_counter = 0 
    
     emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
     
@@ -121,13 +123,46 @@ def processRequest(req):
                     maxIndex = i
                     maxValue = emotionValue[i]
                 i += 1
-            wks.update_cell(row,8,emotionName[maxIndex]) 
+            mainemotion = emotionName[maxIndex]
+            wks.update_cell(row,8,mainemotion) 
             output += " Dominant emotion is "
-            output += emotionName[maxIndex]
+            output += mainemotion
             output += "."
             
-            output += " Do you want to analyse any other files?"            
-                         
+            output += " Do you want to analyse any other files?"    
+            
+            #count the total number of files 
+            total_counter += 1
+            wks.update_cell(row,14,total_counter)
+            
+            neutral_counter = 0
+            happy_counter = 0
+            sad_counter = 0 
+            angry_counter = 0 
+            fear_counter = 0
+            
+            if mainemotion = emotionName[0]:
+                neutral_counter += 1
+                neutral_percentage = (neutral_counter/total_counter)*100
+                wks.update_cell(row,9,neutral_percentage)
+            elif mainemotion = emotionName[1]:
+                happy_counter += 1
+                happy_percentage = (happy_counter/total_counter)*100
+                wks.update_cell(row,10,happy_percentage)
+            elif mainemotion = emotionName[2]:
+                sad_counter += 1
+                sad_percentage = (sad_counter/total_counter)*100
+                wks.update_cell(row,11,sad_percentage)
+            elif mainemotion = emotionName[3]:
+                angry_counter += 1
+                angry_percentage = (angry_counter/total_counter)*100
+                wks.update_cell(row,12,angry_percentage)
+            elif mainemotion = emotionName[4]:
+                fear_counter += 1
+                fear_percentage = (fear_counter/total_counter)*100
+                wks.update_cell(row,13,fear_percentage)
+            else:
+                continue           
     else:
         output += "Not enough sonorancy to determine emotions"
     
@@ -161,8 +196,13 @@ def open_gsheet():
     wks.update_cell(1, 6, "Anger")
     wks.update_cell(1, 7, "Fear")
     wks.update_cell(1, 8, "Dominant Emotion")
+    wks.update_cell(1, 9, "Percentage of neutral files")
+    wks.update_cell(1, 10, "Percentage of happy files")
+    wks.update_cell(1, 11, "Percentage of sad files")
+    wks.update_cell(1, 12, "Percentage of angry files")
+    wks.update_cell(1, 13, "Percentage of fear files")
+    wks.update_cell(1, 14, "Total number of files")
     return wks
-    
     
 def get_wav_file(folder_name, service):
     #Get the list of folders available
