@@ -76,8 +76,6 @@ def processRequest(req):
     #Output data from Vokaturi & save to Google sheet
     output = "The results of the analysis of " + file_name + " is... "
     
-    total_counter = 0 
-    
     row = 2
    
     emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
@@ -129,8 +127,6 @@ def processRequest(req):
             output += "."
             
             output += " Do you want to analyse any other files?"    
-            
-            total_counter += 1
                          
     else:
         output += "Not enough sonorancy to determine emotions"
