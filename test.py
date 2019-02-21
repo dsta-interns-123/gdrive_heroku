@@ -160,7 +160,7 @@ def processRequest(req):
                 fear_percentage = (fear_counter/total_counter)*100
                 wks.update_cell(row,13,fear_percentage)  
             else: 
-                continue                     
+                wks.update_cell(row,13,"error")                     
     else:
         output += "Not enough sonorancy to determine emotions"
     
