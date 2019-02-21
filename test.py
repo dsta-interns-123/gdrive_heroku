@@ -165,6 +165,12 @@ def open_gsheet():
     wks.update_cell(1, 6, "Anger")
     wks.update_cell(1, 7, "Fear")
     wks.update_cell(1, 8, "Dominant Emotion")
+    wks.update_cell(1, 9, "Percentage of neutral files")
+    wks.update_cell(1, 10, "Percentage of happy files")
+    wks.update_cell(1, 11, "Percentage of sad files")
+    wks.update_cell(1, 12, "Percentage of angry files")
+    wks.update_cell(1, 13, "Percentage of fear files")
+    wks.update_cell(1, 14, "Total number of files")    
     return wks
     
     
