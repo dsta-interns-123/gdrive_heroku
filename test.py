@@ -54,7 +54,7 @@ def processRequest(req):
             "fulfillmentText": "No such file in drive"
         }
     
-    request = service.files().get_media(fileId=file_id)
+    request = service.files().get_media(fileId=file_id) #to edit so can read batch files 
     
     #downloads binary data of wav file and stored in a buffered stream
     fh = io.BytesIO()
