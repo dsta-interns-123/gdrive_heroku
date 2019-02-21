@@ -132,6 +132,12 @@ def processRequest(req):
             
             total_counter += 1
             wks.update_cell(row,14,total_counter)
+            
+            neutral_counter = 0
+            happy_counter = 0
+            sad_counter = 0
+            angry_counter = 0
+            fear_counter = 0            
                          
     else:
         output += "Not enough sonorancy to determine emotions"
