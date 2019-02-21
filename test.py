@@ -123,8 +123,8 @@ def processRequest(req):
                     maxIndex = i
                     maxValue = emotionValue[i]
                 i += 1
-            mainemotion = emotionName[maxIndex]
-            wks.update_cell(row,8,mainemotion) 
+            #mainemotion = emotionName[maxIndex]
+            wks.update_cell(row,8,emotionName[maxIndex]) 
             output += " Dominant emotion is "
             output += mainemotion
             output += "."
@@ -135,32 +135,32 @@ def processRequest(req):
             total_counter += 1
             wks.update_cell(row,14,total_counter)
             
-            neutral_counter = 0
-            happy_counter = 0
-            sad_counter = 0 
-            angry_counter = 0 
-            fear_counter = 0
+            #neutral_counter = 0
+            #happy_counter = 0
+            #sad_counter = 0
+            #angry_counter = 0
+            #fear_counter = 0 
             
-            if mainemotion == emotionName[0]:
-                neutral_counter += 1
-                neutral_percentage = (neutral_counter/total_counter)*100
-                wks.update_cell(row,9,neutral_percentage)
-            elif mainemotion == emotionName[1]:
-                happy_counter += 1
-                happy_percentage = (happy_counter/total_counter)*100
-                wks.update_cell(row,10,happy_percentage)
-            elif mainemotion == emotionName[2]:
-                sad_counter += 1
-                sad_percentage = (sad_counter/total_counter)*100
-                wks.update_cell(row,11,sad_percentage)
-            elif mainemotion == emotionName[3]:
-                angry_counter += 1
-                angry_percentage = (angry_counter/total_counter)*100
-                wks.update_cell(row,12,angry_percentage)
-            elif mainemotion == emotionName[4]:
-                fear_counter += 1
-                fear_percentage = (fear_counter/total_counter)*100
-                wks.update_cell(row,13,fear_percentage)
+            #if mainemotion == emotionName[0]:
+                #neutral_counter += 1
+                #neutral_percentage = (neutral_counter/total_counter)*100
+                #wks.update_cell(row,9,neutral_percentage)
+            #elif mainemotion == emotionName[1]:
+                #happy_counter += 1
+                #happy_percentage = (happy_counter/total_counter)*100
+                #wks.update_cell(row,10,happy_percentage)
+            #elif mainemotion == emotionName[2]:
+                #sad_counter += 1
+                #sad_percentage = (sad_counter/total_counter)*100
+                #wks.update_cell(row,11,sad_percentage)
+            #elif mainemotion == emotionName[3]:
+                #angry_counter += 1
+                #angry_percentage = (angry_counter/total_counter)*100
+                #wks.update_cell(row,12,angry_percentage)
+            #elif mainemotion == emotionName[4]:
+                #fear_counter += 1
+                #fear_percentage = (fear_counter/total_counter)*100
+                #wks.update_cell(row,13,fear_percentage)
             else:
                 continue           
     else:
