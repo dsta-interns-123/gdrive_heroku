@@ -131,6 +131,7 @@ def processRequest(req):
             output += " Do you want to analyse any other files?"  
             
             total_counter += 1
+            wks.update_cell(row,14,total_counter)
                          
     else:
         output += "Not enough sonorancy to determine emotions"
