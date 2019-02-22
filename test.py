@@ -77,6 +77,11 @@ def processRequest(req):
     output = "The results of the analysis of " + file_name + " is... "
     
     total_counter = 0
+    neutral_counter = 0
+    happy_counter = 0
+    sad_counter = 0
+    angry_counter = 0
+    fear_counter = 0
     
     row = 2
    
@@ -133,34 +138,36 @@ def processRequest(req):
             total_counter += 1
             wks.update_cell(row,14,total_counter)
             
-            neutral_counter = 0
-            happy_counter = 0
-            sad_counter = 0
-            angry_counter = 0
-            fear_counter = 0  
-            
             if emotionName[maxIndex] == emotionName[0]:
                 neutral_counter += 1
                 neutral_percentage = (neutral_counter/total_counter)*100
-                wks.update_cell(row,9,neutral_percentage)
             elif emotionName[maxIndex] == emotionName[1]:
                 happy_counter += 1
                 happy_percentage = (happy_counter/total_counter)*100
-                wks.update_cell(row,10,happy_percentage)
             elif emotionName[maxIndex] == emotionName[2]:
                 sad_counter += 1
                 sad_percentage = (sad_counter/total_counter)*100
-                wks.update_cell(row,11,sad_percentage)
             elif emotionName[maxIndex] == emotionName[3]:
                 angry_counter += 1
                 angry_percentage = (angry_counter/total_counter)*100
-                wks.update_cell(row,12,angry_percentage)
             elif emotionName[maxIndex] == emotionName[4]:
                 fear_counter += 1
-                fear_percentage = (fear_counter/total_counter)*100
-                wks.update_cell(row,13,fear_percentage)  
+                fear_percentage = (fear_counter/total_counter)*100  
             else: 
-                wks.update_cell(row,13,"error")                     
+                continue #this line may give error or otherwise just write something in google sheet               
+#plot graphs purpose 
+            wks.update_cell(1,9,"Emotions")
+            wks.update_cell(1,10,"Percentage")
+            wks.update_cell(2,9,"Neutral")
+            wks.update_cell(3,9,"Happy")
+            wks.update_cell(4,9,"Sad")
+            wks.update_cell(5,9,"Angry")
+            wks.update_cell(6,9,"Fear")
+            wks.update_cell(2,10,neutral_percentage)
+            wks.update_cell(3,10,happy_percentage)
+            wks.update_cell(4,10,sad_percentage)
+            wks.update_cell(5,10,angry_percentage)
+            wks.update_cell(6,10,fear_percentage)
     else:
         output += "Not enough sonorancy to determine emotions"
     
@@ -193,15 +200,8 @@ def open_gsheet():
     wks.update_cell(1, 5, "Sadness")
     wks.update_cell(1, 6, "Anger")
     wks.update_cell(1, 7, "Fear")
-    wks.update_cell(1, 8, "Dominant Emotion")
-    wks.update_cell(1, 9, "Percentage of neutral files")
-    wks.update_cell(1, 10, "Percentage of happy files")
-    wks.update_cell(1, 11, "Percentage of sad files")
-    wks.update_cell(1, 12, "Percentage of angry files")
-    wks.update_cell(1, 13, "Percentage of fear files")
-    wks.update_cell(1, 14, "Total number of files")    
-    return wks
-    
+    wks.update_cell(1, 8, "Dominant Emotion")  
+    return wks   
     
 def get_wav_file(folder_name, service):
     #Get the list of folders available
