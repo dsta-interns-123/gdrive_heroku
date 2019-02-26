@@ -255,7 +255,7 @@ def batch():
         
     output += " analysis complete"
         
-    return output
+    return output, wks
         
 def authentication():
     store = file.Storage('token.json')
