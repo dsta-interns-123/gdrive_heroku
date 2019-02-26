@@ -248,7 +248,7 @@ def processRequest(req):
         #wks.update_cell(5, 11, '%0.5f' % angry_rate)
         #wks.update_cell(6, 11, '%0.5f' % fear_rate)
         
-        #output += " analysis complete"            
+        output += " analysis complete"            
     return {
             "fulfillmentText": output
     }
