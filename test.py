@@ -126,7 +126,8 @@ def processRequest(req):
     
         voice.destroy()
     
-    output += " analysis complete"
+    number = len(file_list[0])
+    output += number
     return {
             "fulfillmentText": output
     }
