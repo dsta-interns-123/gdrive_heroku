@@ -124,7 +124,7 @@ def processRequest(req):
          
         voice.destroy()   
 
-    elif len(file_list) > 1:         
+    elif len(file_list[0]) > 1:         
         for item in file_list[0]:       
             position = file_list[0].index(item)
             file_name = file_list[0][position]
