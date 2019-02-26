@@ -57,91 +57,91 @@ def processRequest(req):
     output = ""
     
     for item in file_list[0]:       
-            position = file_list[0].index(item)
-            file_name = file_list[0][position]
-            file_id = file_list[1][position]
-            request = service.files().get_media(fileId=file_id) #to edit so can read batch files 
+        position = file_list[0].index(item)
+        file_name = file_list[0][position]
+        file_id = file_list[1][position]
+        request = service.files().get_media(fileId=file_id) #to edit so can read batch files 
     
-            #downloads binary data of wav file and stored in a buffered stream
-            fh = io.BytesIO()
-            downloader = MediaIoBaseDownload(fh, request)
-            done = False
-            while done is False:
-                status, done = downloader.next_chunk()
+        #downloads binary data of wav file and stored in a buffered stream
+        fh = io.BytesIO()
+        downloader = MediaIoBaseDownload(fh, request)
+        done = False
+        while done is False:
+            status, done = downloader.next_chunk()
     
-            #parse buffered stream into Vokaturi (TO-DO: FIX BYTE CONVERSION)
-            buffer_length = fh.getbuffer().nbytes
-            c_buffer = Vokaturi.SampleArrayC(buffer_length)
-            c_buffer[:] = fh.getvalue() 
-            voice = Vokaturi.Voice (8000, buffer_length)
-            voice.fill(buffer_length, c_buffer)
-            quality = Vokaturi.Quality()
-            emotionProbabilities = Vokaturi.EmotionProbabilities()
-            voice.extract(quality, emotionProbabilities)
+        #parse buffered stream into Vokaturi (TO-DO: FIX BYTE CONVERSION)
+        buffer_length = fh.getbuffer().nbytes
+        c_buffer = Vokaturi.SampleArrayC(buffer_length)
+        c_buffer[:] = fh.getvalue() 
+        voice = Vokaturi.Voice (8000, buffer_length)
+        voice.fill(buffer_length, c_buffer)
+        quality = Vokaturi.Quality()
+        emotionProbabilities = Vokaturi.EmotionProbabilities()
+        voice.extract(quality, emotionProbabilities)
     
-            row = 2
+        row = 2
    
-            emotionName = ["neutral", "happy", "sad", "angry", "fear"]
+        emotionName = ["neutral", "happy", "sad", "angry", "fear"]
     
-            if quality.valid:
-                total_count += 1
-                emotionValue = [emotionProbabilities.neutrality, 
-                                emotionProbabilities.happiness,
-                                emotionProbabilities.sadness,
-                                emotionProbabilities.anger,
-                                emotionProbabilities.fear]
-                if wks.cell(row, 1).value == "":
-                    wks.update_cell(row,1,file_name)
-                    wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
-                    wks.update_cell(row,3,'%0.5f' % emotionValue[0])
-                    wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
-                    wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
-                    wks.update_cell(row,6,'%0.5f' % emotionValue[3])
-                    wks.update_cell(row,7,'%0.5f' % emotionValue[4])
-                else:
-                    while wks.cell(row, 1).value != "":
-                        row += 1
-                    wks.update_cell(row,1,file_name)
-                    wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
-                    wks.update_cell(row,3,'%0.5f' % emotionValue[0]) 
-                    wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
-                    wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
-                    wks.update_cell(row,6,'%0.5f' % emotionValue[3])
-                    wks.update_cell(row,7,'%0.5f' % emotionValue[4]) 
+        if quality.valid:
+            total_count += 1
+            emotionValue = [emotionProbabilities.neutrality, 
+                            emotionProbabilities.happiness,
+                            emotionProbabilities.sadness,
+                            emotionProbabilities.anger,
+                            emotionProbabilities.fear]
+            if wks.cell(row, 1).value == "":
+                wks.update_cell(row,1,file_name)
+                wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
+                wks.update_cell(row,3,'%0.5f' % emotionValue[0])
+                wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
+                wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
+                wks.update_cell(row,6,'%0.5f' % emotionValue[3])
+                wks.update_cell(row,7,'%0.5f' % emotionValue[4])
+            else:
+                while wks.cell(row, 1).value != "":
+                       row += 1
+                       wks.update_cell(row,1,file_name)
+                       wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
+                       wks.update_cell(row,3,'%0.5f' % emotionValue[0]) 
+                       wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
+                       wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
+                       wks.update_cell(row,6,'%0.5f' % emotionValue[3])
+                       wks.update_cell(row,7,'%0.5f' % emotionValue[4]) 
             
-                true_emotions = ["angry", "fear", "sad", "neutral", "happy", "disgust", "surprise"]
-                if file_name[0] == "a":
-                    real_emotion = true_emotions[0]
-                elif file_name[0] == "f":
-                    real_emotion = true_emotions[1]
-                elif file_name[0:2] == "sa":
-                    real_emotion = true_emotions[2]
-                elif file_name[0] == "n":
-                    real_emotion = true_emotions[3]
-                elif file_name[0] == "h":
-                    real_emotion = true_emotions[4]
-                elif file_name[0] == "d":
-                    real_emotion = true_emotions[5]
-                elif file_name[0:2] == "su":
-                    real_emotion = true_emotions[6]
-                else:
-                    real_emotion = "not detected"
-                wks.update_cell(row,9,real_emotion)
+            true_emotions = ["angry", "fear", "sad", "neutral", "happy", "disgust", "surprise"]
+            if file_name[0] == "a":
+                real_emotion = true_emotions[0]
+            elif file_name[0] == "f":
+                real_emotion = true_emotions[1]
+            elif file_name[0:2] == "sa":
+                real_emotion = true_emotions[2]
+            elif file_name[0] == "n":
+                real_emotion = true_emotions[3]
+            elif file_name[0] == "h":
+                real_emotion = true_emotions[4]
+            elif file_name[0] == "d":
+                real_emotion = true_emotions[5]
+            elif file_name[0:2] == "su":
+                real_emotion = true_emotions[6]
+            else:
+                real_emotion = "not detected"
+            wks.update_cell(row,9,real_emotion)
             
-                i = 0
-                maxValue = 0
-                maxIndex = 0;
-                while i < len(emotionValue):
-                    if emotionValue[i] > maxValue:
-                        maxIndex = i
+            i = 0
+            maxValue = 0
+            maxIndex = 0;
+            while i < len(emotionValue):
+                  if emotionValue[i] > maxValue:
+                     maxIndex = i
                         maxValue = emotionValue[i]
                     i += 1
-                wks.update_cell(row,8,emotionName[maxIndex])
+            wks.update_cell(row,8,emotionName[maxIndex])
     
-    wks.update_cell(110, 1, len(file_list[0])                  
-            else:
-                output += "Not enough sonorancy to determine emotions"    
-            voice.destroy()
+                     
+        else:
+            output += "Not enough sonorancy to determine emotions"    
+        voice.destroy()
            
     return {
             "fulfillmentText": output
