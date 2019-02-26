@@ -126,7 +126,7 @@ def processRequest(req):
     
         voice.destroy()
     
-    wks.update_cell(100,100,len(file_list))
+    wks.update_cell(100,1,len(file_list))
     
     return {
             "fulfillmentText": output
