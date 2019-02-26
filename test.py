@@ -204,5 +204,3 @@ def get_wav_file(folder_name, service):
         file_id = file_list[1][order]
         list_of_files[1].insert(order,file_id)
     return list_of_files
-    else:
-        return None
