@@ -125,7 +125,7 @@ def processRequest(req):
             output = "Not enough sonorancy to determine emotions"
     
         voice.destroy()
-        
+    wks.update_cell(100,100,file_list)    
     return {
             "fulfillmentText": output
     }
