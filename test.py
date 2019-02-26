@@ -206,19 +206,49 @@ def processRequest(req):
                         maxValue = emotionValue[i]
                     i += 1
                 wks.update_cell(row,8,emotionName[maxIndex])
-            
-                #if real_emotion = "neutral":
-                    #if emotionName[maxIndex] = "Neutral":
-                        #neutral_true += 1
-                    #else: 
-                        #neutral_false += 1
-                 #elif real_emotion = "happy"
-            #output += file_name    
-            
+                
+              if real_emotion == "neutral":
+                   if emotionName[maxIndex] == "neutral":
+                       neutral_true += 1
+                   else: 
+                       neutral_false += 1
+              elif real_emotion == "happy":
+                    if emotionName[maxIndex] == "happy": 
+                        happy_true += 1
+                    else:
+                        happy_false += 1
+              elif real_emotion == "sad": 
+                    if emotionName[maxIndex] == "sad":
+                        sad_true += 1
+                    else:
+                        sad_false += 1
+              elif real_emotion == "angry":
+                    if emotionName[maxIndex] == "angry":
+                        angry_true += 1
+                    else:
+                        angry_false += 1
+              elif real_emotion == "fear":
+                    if emotionName[maxIndex] == "fear":
+                        fear_true += 1
+                    else:
+                        fear_false += 1
             else:
                 output += "Not enough sonorancy to determine emotions"    
             voice.destroy()
-            #output += " analysis complete"
+           
+        neutral_rate = ((neutral_true)/(neutral_false + neutral_true))*100
+        happy_rate = ((happy_true)/(happy_true + happy_false))*100
+        sad_rate = ((sad_true)/(sad_true + sad_false))*100
+        angry_rate = ((angry_true)/(angry_true + angry_false))*100
+        fear_rate = ((fear_true)/(fear_true + fear_false))*100
+        
+        wks.update_cell(2, 11, '%0.5f' % neutral_rate)
+        wks.update_cell(3, 11, '%0.5f' % happy_rate)
+        wks.update_cell(4, 11, '%0.5f' % sad_rate)
+        wks.update_cell(5, 11, '%0.5f' % angry_rate)
+        wks.update_cell(6, 11, '%0.5f' % fear_rate)
+        
+        output += " analysis complete"            
     return {
             "fulfillmentText": output
     }
