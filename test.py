@@ -48,39 +48,44 @@ def processRequest(req):
     wks = open_gsheet()
     
     #check for file in drive
-    (file_name , file_id) = get_wav_file(folder_name,service)
+    file_list = get_wav_file(folder_name,service)
     if not file_name:    #If None, this will be false -> then flipped to true
         return {
             "fulfillmentText": "No such file in drive"
         }
     
-    request = service.files().get_media(fileId=file_id) #to edit so can read batch files 
+    for item in file_list[0]: 
+        
+        position = file_list[0].index(item)
+        file_name = file_list[0][position]
+        file_id = file_list[1][position]
+        request = service.files().get_media(fileId=file_id) #to edit so can read batch files 
     
-    #downloads binary data of wav file and stored in a buffered stream
-    fh = io.BytesIO()
-    downloader = MediaIoBaseDownload(fh, request)
-    done = False
-    while done is False:
-        status, done = downloader.next_chunk()
+        #downloads binary data of wav file and stored in a buffered stream
+        fh = io.BytesIO()
+        downloader = MediaIoBaseDownload(fh, request)
+        done = False
+        while done is False:
+            status, done = downloader.next_chunk()
     
-    #parse buffered stream into Vokaturi (TO-DO: FIX BYTE CONVERSION)
-    buffer_length = fh.getbuffer().nbytes
-    c_buffer = Vokaturi.SampleArrayC(buffer_length)
-    c_buffer[:] = fh.getvalue() 
-    voice = Vokaturi.Voice (8000, buffer_length)
-    voice.fill(buffer_length, c_buffer)
-    quality = Vokaturi.Quality()
-    emotionProbabilities = Vokaturi.EmotionProbabilities()
-    voice.extract(quality, emotionProbabilities)
+        #parse buffered stream into Vokaturi (TO-DO: FIX BYTE CONVERSION)
+        buffer_length = fh.getbuffer().nbytes
+        c_buffer = Vokaturi.SampleArrayC(buffer_length)
+        c_buffer[:] = fh.getvalue() 
+        voice = Vokaturi.Voice (8000, buffer_length)
+        voice.fill(buffer_length, c_buffer)
+        quality = Vokaturi.Quality()
+        emotionProbabilities = Vokaturi.EmotionProbabilities()
+        voice.extract(quality, emotionProbabilities)
     
-    #Output data from Vokaturi & save to Google sheet
-    output = "The results of the analysis of " + file_name + " is... "
+        #Output data from Vokaturi & save to Google sheet
+        output = "The results of the analysis of " + file_name + " is... "
     
-    row = 2
+        row = 2
    
-    emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
+        emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
     
-    if quality.valid:
+        if quality.valid:
                           
             output += (' Neutral: ' + '%.3f' % (emotionProbabilities.neutrality * 100) + '% ')
             output += (' Happiness: ' + '%.3f' % (emotionProbabilities.happiness * 100) + '% ')
@@ -128,14 +133,14 @@ def processRequest(req):
             
             output += " Do you want to analyse any other files?"            
                          
-    else:
-        output += "Not enough sonorancy to determine emotions"
+        else:
+            output += "Not enough sonorancy to determine emotions"
     
-    voice.destroy()
+        voice.destroy()
     
-    return {
-        "fulfillmentText": output
-    }
+        return {
+            "fulfillmentText": output
+        }
 
 def authentication():
     store = file.Storage('token.json')
@@ -203,10 +208,13 @@ def get_wav_file(folder_name, service):
             break
     
     #Select first file to analyse with Vokaturi (TO-DO: Run through all for full analysis)
+    list_of_files = [[],[]]
     for item in file_list[0]: #If list empty, this will be false
         order = file_list[0].index(item)
         file_name = file_list[0][order]
+        list_of_files[0].insert(order,file_name)
         file_id = file_list[1][order]
-    return [file_name, file_id]
+        list_of_files[1].insert(order,file_id)
+    return list_of_files
     else:
         return None
