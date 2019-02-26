@@ -84,7 +84,7 @@ def processRequest(req):
         emotionName = ["neutral", "happy", "sad", "angry", "fear"]
     
         if quality.valid:
-            total_count += 1
+            
             emotionValue = [emotionProbabilities.neutrality, 
                             emotionProbabilities.happiness,
                             emotionProbabilities.sadness,
@@ -109,25 +109,6 @@ def processRequest(req):
                        wks.update_cell(row,6,'%0.5f' % emotionValue[3])
                        wks.update_cell(row,7,'%0.5f' % emotionValue[4]) 
             
-            true_emotions = ["angry", "fear", "sad", "neutral", "happy", "disgust", "surprise"]
-            if file_name[0] == "a":
-                real_emotion = true_emotions[0]
-            elif file_name[0] == "f":
-                real_emotion = true_emotions[1]
-            elif file_name[0:2] == "sa":
-                real_emotion = true_emotions[2]
-            elif file_name[0] == "n":
-                real_emotion = true_emotions[3]
-            elif file_name[0] == "h":
-                real_emotion = true_emotions[4]
-            elif file_name[0] == "d":
-                real_emotion = true_emotions[5]
-            elif file_name[0:2] == "su":
-                real_emotion = true_emotions[6]
-            else:
-                real_emotion = "not detected"
-            wks.update_cell(row,9,real_emotion)
-            
             i = 0
             maxValue = 0
             maxIndex = 0;
@@ -137,12 +118,13 @@ def processRequest(req):
                         maxValue = emotionValue[i]
                     i += 1
             wks.update_cell(row,8,emotionName[maxIndex])
-    
                      
         else:
             output += "Not enough sonorancy to determine emotions"    
         voice.destroy()
-           
+    
+    wks.update_cell(99,1,len(file_list[0])
+                    
     return {
             "fulfillmentText": output
     }
