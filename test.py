@@ -236,11 +236,11 @@ def processRequest(req):
                 output += "Not enough sonorancy to determine emotions"    
             voice.destroy()
            
-        neutral_rate = ((neutral_true)/(neutral_false + neutral_true))*100
-        happy_rate = ((happy_true)/(happy_true + happy_false))*100
-        sad_rate = ((sad_true)/(sad_true + sad_false))*100
-        angry_rate = ((angry_true)/(angry_true + angry_false))*100
-        fear_rate = ((fear_true)/(fear_true + fear_false))*100
+        #neutral_rate = ((neutral_true)/(neutral_false + neutral_true))*100
+        #happy_rate = ((happy_true)/(happy_true + happy_false))*100
+        #sad_rate = ((sad_true)/(sad_true + sad_false))*100
+        #angry_rate = ((angry_true)/(angry_true + angry_false))*100
+        #fear_rate = ((fear_true)/(fear_true + fear_false))*100
         
         #wks.update_cell(2, 11, '%0.5f' % neutral_rate)
         #wks.update_cell(3, 11, '%0.5f' % happy_rate)
