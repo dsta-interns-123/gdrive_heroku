@@ -215,10 +215,10 @@ def processRequest(req):
                  #elif real_emotion = "happy"
             #output += file_name    
             
-        else:
-            output += "Not enough sonorancy to determine emotions"    
-        voice.destroy()
-        #output += " analysis complete"
+            else:
+                output += "Not enough sonorancy to determine emotions"    
+            voice.destroy()
+            #output += " analysis complete"
     return {
             "fulfillmentText": output
     }
