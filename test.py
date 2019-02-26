@@ -236,7 +236,7 @@ def batch():
                     fear_true += 1
                 else:
                     fear_false += 1
-            output += file_name      
+           output += file_name      
         else:
            output += "Not enough sonorancy to determine emotions"    
         voice.destroy()
