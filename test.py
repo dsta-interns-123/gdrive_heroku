@@ -49,10 +49,10 @@ def processRequest(req):
     
     #check for file in drive
     file_list = get_wav_file(folder_name,service)
-    if not file_list:    #If None, this will be false -> then flipped to true
-        return {
-            "fulfillmentText": "No such file in drive"
-        }
+    #if not file_list:    #If None, this will be false -> then flipped to true
+        #return {
+            #"fulfillmentText": "No such file in drive"
+        #}
     
     for item in file_list[0]: 
         
