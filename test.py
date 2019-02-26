@@ -78,20 +78,11 @@ def processRequest(req):
         emotionProbabilities = Vokaturi.EmotionProbabilities()
         voice.extract(quality, emotionProbabilities)
     
-        #Output data from Vokaturi & save to Google sheet
-        output = "The results of the analysis of " + file_name + " is... "
-    
         row = 2
    
         emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
     
         if quality.valid:
-                          
-            output += (' Neutral: ' + '%.3f' % (emotionProbabilities.neutrality * 100) + '% ')
-            output += (' Happiness: ' + '%.3f' % (emotionProbabilities.happiness * 100) + '% ')
-            output += (' Sadness: ' + '%.3f' % (emotionProbabilities.sadness * 100) + '% ') 
-            output += (' Anger: ' + '%.3f' % (emotionProbabilities.anger * 100) + '% ') 
-            output += (' Fear: ' + '%.3f' % (emotionProbabilities.fear * 100) + '% ') 
          
             emotionValue = [emotionProbabilities.neutrality, 
                             emotionProbabilities.happiness,
@@ -127,14 +118,11 @@ def processRequest(req):
                     maxValue = emotionValue[i]
                 i += 1
             wks.update_cell(row,8,emotionName[maxIndex]) 
-            output += " Dominant emotion is "
-            output += emotionName[maxIndex]
-            output += "."
             
-            output += " Do you want to analyse any other files?"            
+            output = file_name + " analysis complete" 
                          
         else:
-            output += "Not enough sonorancy to determine emotions"
+            output = "Not enough sonorancy to determine emotions"
     
         voice.destroy()
     
