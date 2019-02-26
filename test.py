@@ -53,6 +53,7 @@ def processRequest(req):
         return {
             "fulfillmentText": "No such file in drive"
         }
+    output = ""
     
     for item in file_list[0]: 
         
@@ -119,15 +120,13 @@ def processRequest(req):
                 i += 1
             wks.update_cell(row,8,emotionName[maxIndex]) 
             
-            output = file_name + " analysis complete" 
-                         
+            output += file_name                  
         else:
-            output = "Not enough sonorancy to determine emotions"
+            output += "Not enough sonorancy to determine emotions"
     
         voice.destroy()
     
-    wks.update_cell(100,1,len(file_list))
-    
+    output += " analysis complete"
     return {
             "fulfillmentText": output
     }
