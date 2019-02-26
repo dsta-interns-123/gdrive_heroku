@@ -236,12 +236,27 @@ def batch():
                     fear_true += 1
                 else:
                     fear_false += 1
-            #output += file_name    
-            
+            output += file_name      
         else:
            output += "Not enough sonorancy to determine emotions"    
         voice.destroy()
-               
+        
+    neutral_rate = ((neutral_true)/(neutral_false + neutral_true))*100
+    happy_rate = ((happy_true)/(happy_true + happy_false))*100
+    sad_rate = ((sad_true)/(sad_true + sad_false))*100
+    angry_rate = ((angry_true)/(angry_true + angry_false))*100
+    fear_rate = ((fear_true)/(fear_true + fear_false))*100
+        
+    wks.update_cell(2, 11, '%0.5f' % neutral_rate)
+    wks.update_cell(3, 11, '%0.5f' % happy_rate)
+    wks.update_cell(4, 11, '%0.5f' % sad_rate)
+    wks.update_cell(5, 11, '%0.5f' % angry_rate)
+    wks.update_cell(6, 11, '%0.5f' % fear_rate)
+        
+    output += " analysis complete"
+        
+    return output
+        
 def authentication():
     store = file.Storage('token.json')
     creds = store.get()
@@ -266,9 +281,16 @@ def open_gsheet():
     wks.update_cell(1, 6, "Anger")
     wks.update_cell(1, 7, "Fear")
     wks.update_cell(1, 8, "Dominant Emotion")
+    wks.update_cell(1, 9 , "True Emotion")
+    wks.update_cell(1, 10, "Emotions")
+    wks.update_cell(1, 11, "True Positive Rate")
+    wks.update_cell(2, 10, "Neutral")
+    wks.update_cell(3, 10, "Happy")
+    wks.update_cell(4, 10, "Sad")
+    wks.update_cell(5, 10, "Angry")
+    wks.update_cell(6, 10, "Fear")
     return wks
-    
-    
+  
 def get_wav_file(folder_name, service):
     #Get the list of folders available
     folder_list = [[],[]]
