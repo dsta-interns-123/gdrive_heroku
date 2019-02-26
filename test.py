@@ -140,17 +140,17 @@ def processRequest(req):
    
             emotionName = ["neutral", "happy", "sad", "angry", "fear"]
         
-            #total count = 0
-            #neutral_true = 0
-            #neutral_false = 0
-            #happy_true = 0
-            #happy_false = 0
-            #sad_true = 0
-            #sad_false = 0
-            #angry_true = 0
-            #angry_false = 0
-            #fear_true = 0
-            #fear_false = 0
+            total count = 0
+            neutral_true = 0
+            neutral_false = 0
+            happy_true = 0
+            happy_false = 0
+            sad_true = 0
+            sad_false = 0
+            angry_true = 0
+            angry_false = 0
+            fear_true = 0
+            fear_false = 0
     
             if quality.valid:
                 total_count += 1
