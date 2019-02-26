@@ -125,10 +125,10 @@ def processRequest(req):
             output = "Not enough sonorancy to determine emotions"
     
         voice.destroy()
-    
-        return {
+        
+    return {
             "fulfillmentText": output
-        }
+    }
 
 def authentication():
     store = file.Storage('token.json')
