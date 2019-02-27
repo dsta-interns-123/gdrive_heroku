@@ -4,6 +4,7 @@ from httplib2 import Http
 from oauth2client import file, client, tools
 import io
 from apiclient.http import MediaIoBaseDownload
+import Vokaturi
 
 import gspread 
 from oauth2client.service_account import ServiceAccountCredentials 
