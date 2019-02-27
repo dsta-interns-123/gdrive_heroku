@@ -115,9 +115,9 @@ def processRequest(req):
             while i < len(emotionValue):
                   if emotionValue[i] > maxValue:
                      maxIndex = i
-                        maxValue = emotionValue[i]
-                    i += 1
-            wks.update_cell(row,8,emotionName[maxIndex])
+                     maxValue = emotionValue[i]
+                  i += 1
+            wks.update_cell(row,8,emotionName[maxIndex]))
                      
         else:
             output += "Not enough sonorancy to determine emotions"    
