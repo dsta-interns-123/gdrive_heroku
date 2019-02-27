@@ -56,11 +56,11 @@ def processRequest(req):
     
     output = "test"
      
-    wks.update_cell(120,1,len(list_files[0]))
-    wks.update_cell(121,1,len(list_files[1]))
-    wks.update_cell(122,1,folder_name)
-    wks.update_cell(123,1,list_files[0][0])
-    wks.update_cell(124,1,list_files[0][1])
+    wks.update_cell(195,1,len(list_files[0]))
+    wks.update_cell(196,1,len(list_files[1]))
+    wks.update_cell(197,1,folder_name)
+    wks.update_cell(198,1,list_files[0][0])
+    wks.update_cell(199,1,list_files[0][1])
     
     for item in list_files[0]:       
         position = list_files[0].index(item)
@@ -85,7 +85,7 @@ def processRequest(req):
         
         row = 130
         
-        emotionName = ["Neutral", "Happy", "Sad", "Angry", "Fear"]
+        emotionName = ["neutral", "happy", "sad", "angry", "fear"]
     
         if quality.valid:
             emotionValue = [emotionProbabilities.neutrality, 
@@ -123,6 +123,25 @@ def processRequest(req):
                 i += 1
             wks.update_cell(row,8,emotionName[maxIndex])
             
+            true_emotions = ["angry", "fear", "sad", "neutral", "happy", "disgust", "surprise"]
+            if file_name[0] == "a":
+               real_emotion = true_emotions[0]
+            elif file_name[0] == "f":
+               real_emotion = true_emotions[1]
+            elif file_name[0:2] == "sa":
+               real_emotion = true_emotions[2]
+            elif file_name[0] == "n":
+               real_emotion = true_emotions[3]
+            elif file_name[0] == "h":
+               real_emotion = true_emotions[4]
+            elif file_name[0] == "d":
+               real_emotion = true_emotions[5]
+            elif file_name[0:2] == "su":
+               real_emotion = true_emotions[6]
+            else:
+               real_emotion = "not detected"
+            wks.update_cell(row,9,real_emotion)
+            
         else: 
             output += "Not enough sonorancy to determine emotions"
        
@@ -156,6 +175,7 @@ def open_gsheet():
     wks.update_cell(1, 6, "Anger")
     wks.update_cell(1, 7, "Fear")
     wks.update_cell(1, 8, "Dominant Emotion")
+    wks.update_cell(1, 9, "True Emotion")
     return wks
     
     
