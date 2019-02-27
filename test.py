@@ -59,7 +59,14 @@ def processRequest(req):
     wks.update_cell(122,1,folder_name)
     wks.update_cell(123,1,list_files[0][0])
     wks.update_cell(124,1,list_file[0][1])
-                  
+    
+    for item in list_files[0]:       
+        position = list_files[0].index(item)
+        file_name = list_files[0][position]
+        file_id = list_files[1][position]
+        #request = service.files().get_media(fileId=file_id) #to edit so can read batch files
+        wks.update_cell(125,1,file_name)        
+                      
     return {
             "fulfillmentText": output
     }
