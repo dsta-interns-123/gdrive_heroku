@@ -18,7 +18,6 @@ import os
 import json
 app = Flask(__name__)
 
-Vokaturi.load("lib/open/linux/OpenVokaturi-3-0-linux64.so")
 SCOPES = 'https://www.googleapis.com/auth/drive'
 
 @app.route('/webhook', methods=['POST'])
