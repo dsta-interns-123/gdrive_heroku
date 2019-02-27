@@ -40,6 +40,7 @@ def processRequest(req):
     result = req.get("queryResult")
     parameters = result.get("parameters")
     folder_name = parameters.get("FolderType")
+    wks.update_cell(95,1,folder_name)
     
     #verify credentials to use google drive API & get Google API client (or something like that)
     service = authentication()
@@ -48,18 +49,18 @@ def processRequest(req):
     wks = open_gsheet()
     
     #check for file in drive
-    file_list = get_wav_file(folder_name,service)
-    if not file_list:    #If None, this will be false -> then flipped to true
+    list_files = get_wav_file(folder_name,service)
+    if not list_files:    #If None, this will be false -> then flipped to true
         return {
             "fulfillmentText": "No such file in drive"
         }
     
     output = ""
     
-    for item in file_list[0]:       
-        position = file_list[0].index(item)
-        file_name = file_list[0][position]
-        file_id = file_list[1][position]
+    for item in list_files[0]:       
+        position = list_files[0].index(item)
+        file_name = list_files[0][position]
+        file_id = list_files[1][position]
         request = service.files().get_media(fileId=file_id) #to edit so can read batch files 
     
         #downloads binary data of wav file and stored in a buffered stream
@@ -123,8 +124,9 @@ def processRequest(req):
             output += "Not enough sonorancy to determine emotions"    
         voice.destroy()
     
-    wks.update_cell(99,1,len(file_list[0]))
-                    
+    wks.update_cell(98,1,len(list_files[0]))
+    wks.update_cell(97,1,len(list_files[1]))
+                  
     return {
             "fulfillmentText": output
     }
