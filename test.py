@@ -117,13 +117,13 @@ def processRequest(req):
                      maxIndex = i
                      maxValue = emotionValue[i]
                   i += 1
-            wks.update_cell(row,8,emotionName[maxIndex]))
+            wks.update_cell(row,8,emotionName[maxIndex])
                      
         else:
             output += "Not enough sonorancy to determine emotions"    
         voice.destroy()
     
-    wks.update_cell(99,1,len(file_list[0])
+    wks.update_cell(99,1,len(file_list[0]))
                     
     return {
             "fulfillmentText": output
