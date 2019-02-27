@@ -65,7 +65,8 @@ def processRequest(req):
         file_name = list_files[0][position]
         file_id = list_files[1][position]
         #request = service.files().get_media(fileId=file_id) #to edit so can read batch files
-        wks.update_cell(125,1,file_name)        
+        wks.update_cell(125,1,file_name)
+        wks.update_cell(126,1,"bad")
                       
     return {
             "fulfillmentText": output
