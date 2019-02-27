@@ -55,6 +55,18 @@ def processRequest(req):
         }
     
     output = "test"
+    
+    total_count = 0
+    neutral_true = 0
+    neutral_false = 0
+    happy_true = 0
+    happy_false = 0
+    sad_true = 0
+    sad_false = 0
+    angry_true = 0
+    angry_false = 0
+    fear_true = 0
+    fear_false = 0
      
     wks.update_cell(195,1,len(list_files[0]))
     wks.update_cell(196,1,len(list_files[1]))
@@ -141,6 +153,32 @@ def processRequest(req):
             else:
                real_emotion = "not detected"
             wks.update_cell(row,9,real_emotion)
+            
+            if real_emotion == "neutral":
+               if emotionName[maxIndex] == "neutral":
+                  neutral_true += 1
+               else: 
+                  neutral_false += 1
+            elif real_emotion == "happy":
+               if emotionName[maxIndex] == "happy": 
+                  happy_true += 1
+               else:
+                  happy_false += 1
+            elif real_emotion == "sad": 
+               if emotionName[maxIndex] == "sad":
+                  sad_true += 1
+               else:
+                  sad_false += 1
+            elif real_emotion == "angry":
+               if emotionName[maxIndex] == "angry":
+                  angry_true += 1
+               else:
+                  angry_false += 1
+            elif real_emotion == "fear":
+               if emotionName[maxIndex] == "fear":
+                  fear_true += 1
+               else:
+                  fear_false += 1
             
         else: 
             output += "Not enough sonorancy to determine emotions"
