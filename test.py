@@ -57,7 +57,8 @@ def processRequest(req):
     wks.update_cell(70,1,len(list_files[0]))
     wks.update_cell(71,1,len(list_files[1]))
     wks.update_cell(72,1,folder_name)
-    wks.update_cell(73,1,file_name)
+    wks.update_cell(73,1,list_files[0][3])
+    wks.update_cell(84,1,list_file[0][7])
                   
     return {
             "fulfillmentText": output
