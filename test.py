@@ -225,6 +225,12 @@ def open_gsheet():
     wks.update_cell(1, 7, "Fear")
     wks.update_cell(1, 8, "Dominant Emotion")
     wks.update_cell(1, 9, "True Emotion")
+    wks.update_cell(1, 10, "Emotions")
+    wks.update_cell(2, 10, "Neutral")
+    wks.update_cell(3, 10, "Happy")
+    wks.update_cell(4, 10, "Sad")
+    wks.update_cell(5, 10, "Angry")
+    wks.update_cell(6, 10, "Fear")
     wks.update_cell(1, 11, "True Positive Rate")
     return wks
     
