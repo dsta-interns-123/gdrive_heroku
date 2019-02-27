@@ -55,8 +55,7 @@ def processRequest(req):
         }
     
     output = "test"
-    
-    total_count = 0
+   
     neutral_true = 0
     neutral_false = 0
     happy_true = 0
