@@ -62,6 +62,8 @@ def processRequest(req):
     wks.update_cell(198,1,list_files[0][0])
     wks.update_cell(199,1,list_files[0][1])
     
+    row = 200
+    
     for item in list_files[0]:       
         position = list_files[0].index(item)
         file_name = list_files[0][position]
@@ -82,8 +84,6 @@ def processRequest(req):
         quality = Vokaturi.Quality()
         emotionProbabilities = Vokaturi.EmotionProbabilities()
         voice.extract(quality, emotionProbabilities)
-        
-        row = 130
         
         emotionName = ["neutral", "happy", "sad", "angry", "fear"]
     
