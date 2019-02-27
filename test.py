@@ -54,79 +54,12 @@ def processRequest(req):
             "fulfillmentText": "No such file in drive"
         }
     
-    output = ""
-    
-    for item in list_files[0]:       
-        position = list_files[0].index(item)
-        file_name = list_files[0][position]
-        file_id = list_files[1][position]
-        request = service.files().get_media(fileId=file_id) #to edit so can read batch files 
-    
-        #downloads binary data of wav file and stored in a buffered stream
-        fh = io.BytesIO()
-        downloader = MediaIoBaseDownload(fh, request)
-        done = False
-        while done is False:
-            status, done = downloader.next_chunk()
-    
-        #parse buffered stream into Vokaturi (TO-DO: FIX BYTE CONVERSION)
-        buffer_length = fh.getbuffer().nbytes
-        c_buffer = Vokaturi.SampleArrayC(buffer_length)
-        c_buffer[:] = fh.getvalue() 
-        voice = Vokaturi.Voice (8000, buffer_length)
-        voice.fill(buffer_length, c_buffer)
-        quality = Vokaturi.Quality()
-        emotionProbabilities = Vokaturi.EmotionProbabilities()
-        voice.extract(quality, emotionProbabilities)
-    
-        row = 2
-   
-        emotionName = ["neutral", "happy", "sad", "angry", "fear"]
-    
-        if quality.valid:
-            
-            emotionValue = [emotionProbabilities.neutrality, 
-                            emotionProbabilities.happiness,
-                            emotionProbabilities.sadness,
-                            emotionProbabilities.anger,
-                            emotionProbabilities.fear]
-            if wks.cell(row, 1).value == "":
-                wks.update_cell(row,1,file_name)
-                wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
-                wks.update_cell(row,3,'%0.5f' % emotionValue[0])
-                wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
-                wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
-                wks.update_cell(row,6,'%0.5f' % emotionValue[3])
-                wks.update_cell(row,7,'%0.5f' % emotionValue[4])
-            else:
-                while wks.cell(row, 1).value != "":
-                       row += 1
-                       wks.update_cell(row,1,file_name)
-                       wks.update_cell(row,2,str(datetime.datetime.now()) + " GMT")
-                       wks.update_cell(row,3,'%0.5f' % emotionValue[0]) 
-                       wks.update_cell(row,4,'%0.5f' % emotionValue[1]) 
-                       wks.update_cell(row,5,'%0.5f' % emotionValue[2]) 
-                       wks.update_cell(row,6,'%0.5f' % emotionValue[3])
-                       wks.update_cell(row,7,'%0.5f' % emotionValue[4]) 
-            
-            i = 0
-            maxValue = 0
-            maxIndex = 0;
-            while i < len(emotionValue):
-                  if emotionValue[i] > maxValue:
-                     maxIndex = i
-                     maxValue = emotionValue[i]
-                  i += 1
-            wks.update_cell(row,8,emotionName[maxIndex])
-                     
-        else:
-            output += "Not enough sonorancy to determine emotions"    
-        voice.destroy()
-    
-    wks.update_cell(90,1,len(list_files[0]))
-    wks.update_cell(91,1,len(list_files[1]))
-    wks.update_cell(92,1,folder_name)
-    wks.update_cell(93,1,file_name)
+    output = "test"
+     
+    wks.update_cell(70,1,len(list_files[0]))
+    wks.update_cell(71,1,len(list_files[1]))
+    wks.update_cell(72,1,folder_name)
+    wks.update_cell(73,1,file_name)
                   
     return {
             "fulfillmentText": output
@@ -198,11 +131,11 @@ def get_wav_file(folder_name, service):
             break
     
     #Select first file to analyse with Vokaturi (TO-DO: Run through all for full analysis)
-    list_of_files = [[],[]]
-    for item in file_list[0]: #If list empty, this will be false
-        order = file_list[0].index(item)
-        file_name = file_list[0][order]
-        list_of_files[0].insert(order,file_name)
-        file_id = file_list[1][order]
-        list_of_files[1].insert(order,file_id)
-    return list_of_files
+    #list_of_files = [[],[]]
+    #for item in file_list[0]: #If list empty, this will be false
+        #order = file_list[0].index(item)
+        #file_name = file_list[0][order]
+        #list_of_files[0].insert(order,file_name)
+        #file_id = file_list[1][order]
+        #list_of_files[1].insert(order,file_id)
+    return file_list
