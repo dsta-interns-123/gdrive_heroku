@@ -184,11 +184,11 @@ def processRequest(req):
                      
         voice.destroy()
         
-    wks.update_cell(2, 11, neutral_true)
+    wks.update_cell(2, 11, "neutral_true")
     wks.update_cell(3, 11, happy_true)
-    wks.update_cell(4, 11, sad_true)
+    wks.update_cell(4, 11, "sad_true")
     wks.update_cell(5, 11, angry_true)
-    wks.update_cell(6, 11, fear_true)        
+    wks.update_cell(6, 11, fear_false)        
     
     return {
             "fulfillmentText": output
