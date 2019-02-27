@@ -196,13 +196,5 @@ def get_wav_file(folder_name, service):
         if page_token is None:
             print("getting out")
             break
-    
-    #Select first file to analyse with Vokaturi (TO-DO: Run through all for full analysis)
-    list_of_files = [[],[]]
-    for item in file_list[0]: #If list empty, this will be false
-        order = file_list[0].index(item)
-        file_name = file_list[0][order]
-        list_of_files[0].insert(order,file_name)
-        file_id = file_list[1][order]
-        list_of_files[1].insert(order,file_id)
-    return list_of_files
+   
+    return file_list
