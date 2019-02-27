@@ -123,9 +123,10 @@ def processRequest(req):
             output += "Not enough sonorancy to determine emotions"    
         voice.destroy()
     
-    wks.update_cell(98,1,len(list_files[0]))
-    wks.update_cell(97,1,len(list_files[1]))
-    wks.update_cell(96,1,folder_name)
+    wks.update_cell(90,1,len(list_files[0]))
+    wks.update_cell(91,1,len(list_files[1]))
+    wks.update_cell(92,1,folder_name)
+    wks.update_cell(93,1,file_name)
                   
     return {
             "fulfillmentText": output
