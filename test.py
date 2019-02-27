@@ -40,7 +40,6 @@ def processRequest(req):
     result = req.get("queryResult")
     parameters = result.get("parameters")
     folder_name = parameters.get("FolderType")
-    wks.update_cell(95,1,folder_name)
     
     #verify credentials to use google drive API & get Google API client (or something like that)
     service = authentication()
@@ -126,6 +125,7 @@ def processRequest(req):
     
     wks.update_cell(98,1,len(list_files[0]))
     wks.update_cell(97,1,len(list_files[1]))
+    wks.update_cell(96,1,folder_name)
                   
     return {
             "fulfillmentText": output
