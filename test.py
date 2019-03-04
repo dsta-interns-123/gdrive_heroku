@@ -184,17 +184,32 @@ def processRequest(req):
                      
         voice.destroy()
         
-    neutral_rate = ((neutral_true)/(neutral_false + neutral_true))*100
-    happy_rate = ((happy_true)/(happy_true + happy_false))*100
-    sad_rate = ((sad_true)/(sad_true + sad_false))*100
-    angry_rate = ((angry_true)/(angry_true + angry_false))*100
-    fear_rate = ((fear_true)/(fear_true + fear_false))*100
+    try: 
+        neutral_rate = ((neutral_true)/(neutral_false + neutral_true))*100
+    except ZeroDivisionError: 
+        neutral_rate = 0
+    try:        
+        happy_rate = ((happy_true)/(happy_true + happy_false))*100
+    except ZeroDivisionError: 
+        happy_rate = 0 
+    try: 
+        sad_rate = ((sad_true)/(sad_true + sad_false))*100
+    except ZeroDivisionError:  
+        sad_rate = 0
+    try:         
+        angry_rate = ((angry_true)/(angry_true + angry_false))*100
+    except ZeroDivisionError:
+        angry_rate = 0
+    try:        
+        fear_rate = ((fear_true)/(fear_true + fear_false))*100
+    except ZeroDivisionError: 
+        fear_rate = 0         
         
     wks.update_cell(2, 11, '%0.5f' % neutral_rate)
     wks.update_cell(3, 11, '%0.5f' % happy_rate)
     wks.update_cell(4, 11, '%0.5f' % sad_rate)
     wks.update_cell(5, 11, '%0.5f' % angry_rate)
-    wks.update_cell(6, 11, '%0.5f' % fear_rate)        
+    wks.update_cell(6, 11, '%0.5f' % fear_rate)   
     
     return {
             "fulfillmentText": output
