@@ -67,13 +67,13 @@ def processRequest(req):
     fear_true = 0
     fear_false = 0
      
-    wks.update_cell(195,1,len(list_files[0]))
-    wks.update_cell(196,1,len(list_files[1]))
-    wks.update_cell(197,1,folder_name)
-    wks.update_cell(198,1,list_files[0][0])
-    wks.update_cell(199,1,list_files[0][1])
+    wks.update_cell(2,1,len(list_files[0]))
+    wks.update_cell(3,1,len(list_files[1]))
+    wks.update_cell(4,1,folder_name)
+    wks.update_cell(5,1,list_files[0][0])
+    wks.update_cell(6,1,list_files[0][1])
     
-    row = 200
+    row = 7
     
     for item in list_files[0]:       
         position = list_files[0].index(item)
