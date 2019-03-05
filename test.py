@@ -205,11 +205,11 @@ def processRequest(req):
     except ZeroDivisionError: 
         fear_rate = 0         
         
-    wks.update_cell(2, 11, '%0.5f' % neutral_rate)
-    wks.update_cell(3, 11, '%0.5f' % happy_rate)
-    wks.update_cell(4, 11, '%0.5f' % sad_rate)
-    wks.update_cell(5, 11, '%0.5f' % angry_rate)
-    wks.update_cell(6, 11, '%0.5f' % fear_rate)   
+    wks.update_cell(2, 15, '%0.5f' % neutral_rate)
+    wks.update_cell(2, 16, '%0.5f' % happy_rate)
+    wks.update_cell(2, 17, '%0.5f' % sad_rate)
+    wks.update_cell(2, 18, '%0.5f' % angry_rate)
+    wks.update_cell(2, 19, '%0.5f' % fear_rate)   
     
     return {
             "fulfillmentText": output
@@ -240,15 +240,22 @@ def open_gsheet():
     wks.update_cell(1, 7, "Fear")
     wks.update_cell(1, 8, "Dominant Emotion")
     wks.update_cell(1, 9, "True Emotion")
-    wks.update_cell(1, 10, "Emotions")
-    wks.update_cell(2, 10, 1)
-    wks.update_cell(3, 10, 2)
-    wks.update_cell(4, 10, 3)
-    wks.update_cell(5, 10, 4)
-    wks.update_cell(6, 10, 5)
-    wks.update_cell(1, 11, "True Positive Rate")
+    wks.update_cell(1, 10, "Emotion 1")
+    wks.update_cell(1, 11, "Emotion 2")
+    wks.update_cell(1, 12, "Emotion 3")
+    wks.update_cell(1, 13, "Emotion 4")
+    wks.update_cell(1, 14, "Emotion 5")
+    wks.update_cell(2, 10, "Neutral")
+    wks.update_cell(2, 11, "Happy")
+    wks.update_cell(2, 12, "Sad")
+    wks.update_cell(2, 13, "Angry")
+    wks.update_cell(2, 14, "Fear")
+    wks.update_cell(1, 15, "Value 1")
+    wks.update_cell(1, 16, "Value 2")
+    wks.update_cell(1, 17, "Value 3")
+    wks.update_cell(1, 18, "Value 4")
+    wks.update_cell(1, 19, "Value 5")
     return wks
-    
     
 def get_wav_file(folder_name, service):
     #Get the list of folders available
