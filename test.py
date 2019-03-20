@@ -74,7 +74,7 @@ def processRequest(req):
     wks.update_cell(6,1,list_files[0][1])
     
     row = 7
-    
+    #loop through list for each file
     for item in list_files[0]:       
         position = list_files[0].index(item)
         file_name = list_files[0][position]
@@ -183,7 +183,7 @@ def processRequest(req):
             output += "Not enough sonorancy to determine emotions"
                      
         voice.destroy()
-        
+    #calculation of true positive rate for each emotion     
     try: 
         neutral_rate = ((neutral_true)/(neutral_false + neutral_true))*100
     except ZeroDivisionError: 
@@ -204,7 +204,7 @@ def processRequest(req):
         fear_rate = ((fear_true)/(fear_true + fear_false))*100
     except ZeroDivisionError: 
         fear_rate = 0         
-        
+       
     wks.update_cell(2, 11, '%0.5f' % neutral_rate)
     wks.update_cell(3, 11, '%0.5f' % happy_rate)
     wks.update_cell(4, 11, '%0.5f' % sad_rate)
@@ -287,8 +287,8 @@ def get_wav_file(folder_name, service):
         if page_token is None:
             print("getting out")
             break
-    
-    #Select first file to analyse with Vokaturi (TO-DO: Run through all for full analysis)
+   
+    #Create a file list of all the files in the folder 
     list_of_files = [[],[]]
     for item in file_list[0]: #If list empty, this will be false
         order = file_list[0].index(item)
